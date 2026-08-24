@@ -1,0 +1,136 @@
+/* ==========================================================================
+   responsive.css — Adaptaciones por tamaño de pantalla
+   Se carga en último lugar para poder sobrescribir sin !important.
+   ========================================================================== */
+
+/* ---------- ≤ 1024px : tablet horizontal ---------- */
+@media (max-width: 1024px) {
+  :root { --sp-9: 4.5rem; --sp-8: 3.25rem; }
+
+  .grid--4 { grid-template-columns: repeat(2, 1fr); }
+
+  /* Quiénes somos pasa a una columna: primero la foto, luego el texto */
+  .about__inner { grid-template-columns: 1fr; gap: var(--sp-6); }
+  .about__media img { aspect-ratio: 16 / 10; }
+
+  /* La carta: el destacado sigue arriba y los otros tres van de dos en dos */
+  .menu-grid { grid-template-columns: repeat(2, 1fr); }
+  .menu-grid .dish { grid-column: span 1; }
+  .menu-grid .dish--featured { grid-column: 1 / -1; }
+  .dish--featured .dish__media { flex-basis: 45%; min-height: 260px; }
+  .dish--featured .dish__name { font-size: 1.6rem; }
+
+  .booking { grid-template-columns: 1fr; }
+  .contact-card { position: static; }
+
+  .alt__inner { grid-template-columns: 1fr; }
+  .alt__media { order: -1; }
+
+  .site-footer__inner { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- ≤ 880px : tablet vertical / menú móvil ---------- */
+@media (max-width: 880px) {
+  .nav-toggle { display: flex; }
+
+  .nav {
+    position: fixed;
+    inset: var(--header-h) 0 auto 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    background: var(--c-black);
+    border-bottom: 4px solid var(--c-yellow);
+    transform: translateY(-120%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform .35s var(--ease), opacity .25s var(--ease), visibility .25s;
+    max-height: calc(100svh - var(--header-h));
+    overflow-y: auto;
+  }
+
+  .nav.is-open { transform: translateY(0); opacity: 1; visibility: visible; }
+
+  .nav__list { flex-direction: column; align-items: stretch; gap: 0; }
+
+  .nav__list li + li { border-top: 1px solid var(--c-border-invert); }
+
+  .nav__link { display: block; padding: var(--sp-4) 0; font-size: var(--fs-base); }
+  .nav__link::after { display: none; }
+
+  .nav__cta { align-self: stretch; }
+
+  .grid--3 { grid-template-columns: repeat(2, 1fr); }
+
+  .gallery { grid-auto-rows: 200px; }
+
+  .site-footer__brand { grid-column: 1 / -1; }
+}
+
+/* ---------- ≤ 640px : móvil ---------- */
+@media (max-width: 640px) {
+  :root {
+    --fs-2xl: 2rem;
+    --fs-xl: 1.45rem;
+    --sp-9: 3.5rem;
+  }
+
+  .container { padding-inline: var(--sp-4); }
+
+  .hero { min-height: auto; padding-block: calc(var(--header-h) + var(--sp-7)) var(--sp-7); }
+  .hero__actions .btn { flex: 1 1 100%; }
+  .hero__features { gap: var(--sp-2); }
+  .hero__features li { font-size: var(--fs-xs); padding: .45rem .85rem; }
+
+  .grid--2,
+  .grid--3,
+  .grid--4 { grid-template-columns: 1fr; }
+
+  .menu-grid { grid-template-columns: 1fr; }
+  .menu-grid .dish--featured { flex-direction: column; }
+  .dish--featured .dish__media { flex: none; aspect-ratio: 16 / 10; min-height: 0; }
+  .dish--featured .dish__name { font-size: 1.4rem; }
+  .dish--featured .dish__desc { font-size: var(--fs-sm); }
+  .dish--featured .dish__body { padding: var(--sp-5); }
+
+  .about__badge {
+    left: var(--sp-4);
+    bottom: var(--sp-4);
+    font-size: var(--fs-xs);
+    padding: .55rem .9rem;
+  }
+
+  .form { padding: var(--sp-5) var(--sp-4); }
+  .form__row { grid-template-columns: 1fr; }
+
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 160px;
+  }
+
+  .site-footer__inner { grid-template-columns: 1fr; }
+  .brand__text { font-size: 1rem; }
+  .brand__logo { width: 40px; height: 40px; }
+
+  /* Deja hueco para que el botón de WhatsApp no tape el pie */
+  .site-footer__bottom { padding-bottom: calc(var(--sp-4) + 64px); }
+}
+
+/* ---------- Impresión ---------- */
+@media print {
+  .site-header,
+  .nav-toggle,
+  .marquee,
+  .hero__actions,
+  .form,
+  .wa-fab,
+  .cookie-banner,
+  .site-footer__nav { display: none; }
+
+  body { color: #000; background: #fff; }
+  .section--dark,
+  .section--yellow,
+  .hero { background: #fff; color: #000; }
+  .hero__media { display: none; }
+}

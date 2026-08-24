@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Catering">
+  <path d="M14 74h92"/>
+  <path d="M22 74a38 38 0 0 1 76 0"/>
+  <path d="M60 36V26"/>
+  <circle cx="60" cy="20" r="6"/>
+  <path d="M30 90h60"/>
+  <path d="M40 56c6-8 14-8 20 0s14 8 20 0"/>
+</svg>

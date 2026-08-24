@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagnóstico del formulario — La Alternativa Go</title>
+<style>
+  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+         max-width: 720px; margin: 0 auto; padding: 32px 20px; line-height: 1.6;
+         background: #fafafa; color: #111; }
+  h1 { font-size: 1.5rem; margin-bottom: .25rem; }
+  .sub { color: #666; margin-bottom: 28px; }
+  button { background: #ffc300; color: #000; border: 0; border-radius: 999px;
+           padding: 14px 28px; font-weight: 700; font-size: 1rem; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: default; }
+  pre { background: #000; color: #eee; padding: 16px; border-radius: 8px;
+        overflow-x: auto; font-size: 13px; white-space: pre-wrap;
+        word-break: break-word; }
+  .box { border-left: 5px solid #ffc300; background: #fff; padding: 16px;
+         border-radius: 6px; margin: 20px 0; }
+  .ok   { border-color: #1a9e4b; }
+  .warn { border-color: #e0a800; }
+  .bad  { border-color: #d33a2c; }
+  code { background: #eee; padding: 1px 5px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<h1>Diagnóstico del formulario</h1>
+<p class="sub">
+  Envía una solicitud de prueba a <code>hugo4rubio@gmail.com</code> y te enseña,
+  sin filtros, qué contesta el servicio de correo.
+</p>
+
+<div class="box warn">
+  <strong>Ábrelo desde un servidor, no con doble clic.</strong><br>
+  Abierto como archivo local el navegador bloquea la petición por seguridad y
+  siempre dirá que falla, aunque todo esté bien. Desde la carpeta del proyecto:
+  <pre>python3 -m http.server 8000</pre>
+  y entra en <code>http://localhost:8000/tools/test-envio.html</code>
+</div>
+
+<button id="go">Enviar prueba</button>
+
+<div id="out"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var ENDPOINT = 'https://formsubmit.co/ajax/hugo4rubio@gmail.com';
+  var boton = document.getElementById('go');
+  var salida = document.getElementById('out');
+
+  function pinta(clase, titulo, cuerpo, crudo) {
+    salida.innerHTML =
+      '<div class="box ' + clase + '"><strong>' + titulo + '</strong><br>' + cuerpo + '</div>' +
+      (crudo ? '<p><strong>Respuesta literal del servicio:</strong></p><pre>' + crudo + '</pre>' : '');
+  }
+
+  boton.addEventListener('click', function () {
+    boton.disabled = true;
+    salida.innerHTML = '<p>Enviando…</p>';
+
+    var datos = new FormData();
+    datos.append('_subject', 'PRUEBA · Diagnóstico del formulario');
+    datos.append('_template', 'table');
+    datos.append('_captcha', 'false');
+    datos.append('Prueba', 'Esto es un envío de prueba desde test-envio.html');
+    datos.append('Hora', new Date().toLocaleString('es-ES'));
+
+    fetch(ENDPOINT, { method: 'POST', headers: { Accept: 'application/json' }, body: datos })
+      .then(function (r) {
+        return r.text().then(function (t) { return { status: r.status, raw: t }; });
+      })
+      .then(function (r) {
+        var esc = r.raw.replace(/</g, '&lt;');
+        var t = r.raw.toLowerCase();
+
+        if (t.indexOf('confirm') !== -1 || t.indexOf('activat') !== -1) {
+          pinta('warn',
+            'Falta activar el formulario (es lo normal la primera vez)',
+            'El servicio ha recibido el envío pero todavía no tiene permiso para escribirte. ' +
+            'Ve a la bandeja de <code>hugo4rubio@gmail.com</code>, <strong>mira también en Spam ' +
+            'y en Promociones</strong>, busca un correo de <code>FormSubmit</code> y pulsa su ' +
+            'botón de activación. Después vuelve aquí y dale otra vez a «Enviar prueba»: ' +
+            'debería salir en verde y llegarte el correo.',
+            esc);
+          return;
+        }
+
+        if (r.status >= 200 && r.status < 300) {
+          pinta('ok',
+            'Enviado correctamente',
+            'El servicio lo ha aceptado. En menos de un minuto deberías tener el correo ' +
+            'en <code>hugo4rubio@gmail.com</code>. Si no aparece, mira en Spam.',
+            esc);
+          return;
+        }
+
+        pinta('bad', 'El servicio ha devuelto un error (' + r.status + ')',
+          'Copia la respuesta de abajo y pásamela.', esc);
+      })
+      .catch(function (e) {
+        pinta('bad', 'No se ha podido contactar con el servicio',
+          'Puede ser por tres motivos: has abierto este archivo con doble clic en vez de por ' +
+          '<code>http://localhost</code>, no hay conexión, o un bloqueador está parando la ' +
+          'petición. Prueba a desactivar el bloqueador de anuncios y a abrirlo desde el servidor local.',
+          String(e));
+      })
+      .then(function () { boton.disabled = false; });
+  });
+})();
+</script>
+
+</body>
+</html>

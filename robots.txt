@@ -1,0 +1,8 @@
+# robots.txt — La Alternativa Go
+# Foodtruck y catering en Talavera de la Reina (Toledo)
+
+User-agent: *
+Allow: /
+Disallow: /paginas/
+
+Sitemap: https://www.alternativago.com/sitemap.xml
