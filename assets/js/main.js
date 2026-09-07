@@ -19,6 +19,7 @@
 
     // 3. Detalles visuales (observa también el contenido recién generado)
     if (window.LAG_UI) window.LAG_UI.init();
+    if (window.LAG_Effects) window.LAG_Effects.init();
   }
 
   if (document.readyState === 'loading') {

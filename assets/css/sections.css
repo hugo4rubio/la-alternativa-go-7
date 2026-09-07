@@ -48,12 +48,24 @@
     rgba(0, 0, 0, .92) 100%);
 }
 
+/* Grano cinematográfico muy sutil: rompe la planitud del degradado */
+.hero__media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: .35;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 .hero__inner { max-width: 880px; }
 
 .hero__title {
   font-size: var(--fs-3xl);
   line-height: .94;
   margin-bottom: var(--sp-5);
+  text-shadow: 0 6px 40px rgba(0, 0, 0, .5);
 }
 
 .hero__text {
@@ -72,26 +84,33 @@
 
 .hero__features { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
 
-.hero__features li svg { width: 17px; height: 17px; color: var(--c-yellow); }
+.hero__features li svg { width: 17px; height: 17px; color: var(--c-yellow); transition: transform .3s var(--ease); }
 
 .hero__features li {
   display: flex;
   align-items: center;
   gap: var(--sp-2);
   padding: .55rem 1.1rem;
+  background: rgba(255, 255, 255, .06);
+  backdrop-filter: blur(6px);
   border: 1px solid rgba(255, 255, 255, .25);
   border-radius: var(--radius-pill);
   font-size: var(--fs-sm);
   font-weight: 500;
   transition: border-color .3s var(--ease), color .3s var(--ease),
-              transform .3s var(--ease);
+              transform .3s var(--ease), background .3s var(--ease),
+              box-shadow .3s var(--ease);
 }
 
 .hero__features li:hover {
   border-color: var(--c-yellow);
   color: var(--c-yellow);
-  transform: translateY(-3px);
+  background: rgba(255, 195, 0, .08);
+  transform: translateY(-4px);
+  box-shadow: var(--glow-sm);
 }
+
+.hero__features li:hover svg { transform: scale(1.15) rotate(-6deg); }
 
 /* Flecha de «sigue bajando» */
 .hero__scroll {
@@ -155,7 +174,8 @@
   content: "";
   position: absolute;
   inset: 0;
-  border: 3px solid var(--c-yellow);
+  border: 3px solid transparent;
+  border-image: var(--grad-gold) 1;
   border-radius: var(--radius-lg);
   translate: 18px 18px;
   z-index: -1;
@@ -168,10 +188,19 @@
 }
 
 .about__frame {
+  --rx: 0deg;
+  --ry: 0deg;
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--c-black);
+  box-shadow: var(--shadow-lg);
+  transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform .4s var(--ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about__frame { transform: none !important; }
 }
 
 .about__media img {
@@ -217,13 +246,13 @@
   align-items: center;
   gap: var(--sp-3);
   padding: .75rem 1.25rem;
-  background: var(--c-yellow);
+  background: var(--grad-gold);
   color: var(--c-black);
   border-radius: var(--radius-pill);
   font-weight: 800;
   font-size: var(--fs-sm);
   letter-spacing: -.01em;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow), var(--glow-sm);
   animation: badgeFloat 4.5s ease-in-out infinite alternate;
 }
 
@@ -275,7 +304,10 @@
   align-items: flex-start;
   padding-bottom: var(--sp-4);
   border-bottom: 1px solid var(--c-ink-12);
+  transition: translate .3s var(--ease);
 }
+
+.pillar:hover { translate: 6px 0; }
 
 .pillar:last-child { border-bottom: 0; padding-bottom: 0; }
 
@@ -286,8 +318,9 @@
   width: 44px;
   height: 44px;
   border-radius: 10px;
-  background: var(--c-yellow);
+  background: var(--grad-gold);
   color: var(--c-black);
+  box-shadow: 0 6px 16px rgba(255, 195, 0, .28);
   transition: transform .3s var(--ease);
 }
 
@@ -384,16 +417,26 @@
 .menu-note strong { color: var(--c-text); }
 
 .dish {
+  --rx: 0deg;
+  --ry: 0deg;
   display: flex;
   flex-direction: column;
   background: var(--c-white);
   border: 1px solid var(--c-ink-12);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+  transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(0);
+  transition: transform .45s var(--ease), box-shadow .45s var(--ease);
 }
 
-.dish:hover { transform: translateY(-8px); box-shadow: var(--shadow); }
+.dish:hover {
+  transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-10px);
+  box-shadow: var(--shadow), var(--glow-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dish { transform: none !important; }
+}
 
 .dish__media {
   position: relative;
@@ -402,14 +445,25 @@
   background: var(--c-black);
 }
 
+.dish__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, .35) 0%, transparent 45%);
+  opacity: 0;
+  transition: opacity .4s var(--ease);
+}
+
+.dish:hover .dish__media::after { opacity: 1; }
+
 .dish__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .6s var(--ease);
+  transition: transform .6s var(--ease), filter .6s var(--ease);
 }
 
-.dish:hover .dish__media img { transform: scale(1.08); }
+.dish:hover .dish__media img { transform: scale(1.1); filter: saturate(1.15) brightness(1.03); }
 
 .dish__body {
   padding: var(--sp-5);
@@ -433,15 +487,19 @@
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 1.15rem;
-  background: var(--c-yellow);
+  background: var(--grad-gold);
   color: var(--c-black);
   padding: .1rem .5rem;
   border-radius: var(--radius-sm);
   white-space: nowrap;
-  transition: transform .35s var(--ease);
+  box-shadow: 0 4px 12px rgba(255, 195, 0, 0);
+  transition: transform .4s var(--ease-spring), box-shadow .4s var(--ease);
 }
 
-.dish:hover .dish__price { transform: rotate(-3deg) scale(1.08); }
+.dish:hover .dish__price {
+  transform: rotate(-3deg) scale(1.1);
+  box-shadow: 0 6px 16px rgba(255, 195, 0, .4);
+}
 
 .dish__desc { font-size: var(--fs-sm); color: var(--c-text-soft); }
 
@@ -480,36 +538,71 @@
 }
 
 .gallery__item {
+  --rx: 0deg;
+  --ry: 0deg;
   position: relative;
   overflow: hidden;
   border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform .45s var(--ease), box-shadow .45s var(--ease);
+}
+
+.gallery__item:hover { box-shadow: var(--shadow), var(--glow-sm); }
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery__item { transform: none !important; }
 }
 
 .gallery__item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .7s var(--ease), filter .4s var(--ease);
+  filter: saturate(.75) contrast(1.02);
+  transition: transform .8s var(--ease), filter .5s var(--ease);
 }
 
-/* Velo amarillo + lupa al pasar el ratón */
+@media (hover: hover) and (pointer: fine) {
+  .gallery__item img { filter: saturate(.55) contrast(1.02) brightness(.92); }
+}
+
+/* Velo dorado + lupa al pasar el ratón, sobre la foto ya a todo color */
 .gallery__item::after {
-  content: "+";
+  content: "";
   position: absolute;
   inset: 0;
   display: grid;
   place-items: center;
-  font-size: 2.2rem;
-  font-weight: 300;
-  color: var(--c-black);
-  background: rgba(255, 195, 0, .88);
+  background:
+    linear-gradient(0deg, rgba(0, 0, 0, .55) 0%, transparent 55%),
+    linear-gradient(rgba(255, 195, 0, 0), rgba(255, 195, 0, 0));
   opacity: 0;
   transition: opacity .35s var(--ease);
 }
 
-.gallery__item:hover img { transform: scale(1.08); }
+.gallery__item::before {
+  content: "+";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  font-size: 2.4rem;
+  font-weight: 200;
+  color: var(--c-yellow);
+  text-shadow: 0 0 20px rgba(255, 195, 0, .7);
+  opacity: 0;
+  scale: .7;
+  transition: opacity .35s var(--ease), scale .35s var(--ease-spring);
+  pointer-events: none;
+}
+
+.gallery__item:hover img,
+.gallery__item:focus-visible img { transform: scale(1.12); filter: saturate(1.05) contrast(1.05) brightness(1); }
 .gallery__item:hover::after,
 .gallery__item:focus-visible::after { opacity: 1; }
+.gallery__item:hover::before,
+.gallery__item:focus-visible::before { opacity: 1; scale: 1; }
 
 /* ==========================================================================
    7 · LA ALTERNATIVA — bloque destacado sobre negro
@@ -609,7 +702,8 @@
   width: 118px;
   height: 118px;
   object-fit: contain;
-  filter: brightness(0) invert(1);   /* blanco puro sobre el fondo negro */
+  /* blanco puro sobre el fondo negro, con un leve resplandor dorado */
+  filter: brightness(0) invert(1) drop-shadow(0 0 18px rgba(255, 195, 0, .45));
   animation: levitate 5s ease-in-out infinite alternate;
 }
 
@@ -713,7 +807,13 @@
   border: 1px solid var(--c-paper-18);
   border-radius: var(--radius-pill);
   color: var(--c-paper-70);
-  transition: border-color .25s var(--ease), color .25s var(--ease);
+  transition: border-color .25s var(--ease), color .25s var(--ease),
+              background .25s var(--ease), translate .25s var(--ease);
 }
 
-.areas li:hover { border-color: var(--c-yellow); color: var(--c-yellow); }
+.areas li:hover {
+  border-color: var(--c-yellow);
+  color: var(--c-yellow);
+  background: rgba(255, 195, 0, .08);
+  translate: 0 -2px;
+}

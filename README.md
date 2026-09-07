@@ -186,8 +186,20 @@ dentro de Resend y añade otra variable `REMITENTE` con
 - **Fecha** en largo: «10 de octubre de 2026», no `2026-10-10`.
 - **Responder** va directo al cliente.
 
-`api/enviar.js` y `tools/enviar.php` generan exactamente el mismo correo, así que da igual por
-cuál de los dos acabes yendo.
+Además, se manda automáticamente **una copia de confirmación al cliente**, con el mismo diseño
+pero en tono de «hemos recibido tu solicitud»: resumen de sus datos, su mensaje y botones de
+**WhatsApp** y **Llamar** para que pueda contactar si tiene prisa. Si esa copia falla por lo que
+sea, la solicitud al negocio llega igual: nunca se pierde por un fallo en la copia del cliente.
+
+`api/enviar.js` y `tools/enviar.php` generan exactamente los mismos dos correos, así que da igual
+por cuál de los dos acabes yendo.
+
+> **Aviso sobre Vercel/Resend:** mientras el remitente sea el de pruebas (`onboarding@resend.dev`),
+> Resend solo entrega correos a la dirección con la que creaste la cuenta (`hugo4rubio@gmail.com`).
+> La copia al cliente no le llegará de verdad hasta que verifiques tu propio dominio
+> (`alternativago.com`) en Resend y añadas la variable `REMITENTE`, tal y como se explica arriba.
+> En la versión PHP (`tools/enviar.php`) no aplica esta limitación: `mail()` envía a cualquier
+> dirección desde el primer momento.
 
 ### Si algo falla
 

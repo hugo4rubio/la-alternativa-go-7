@@ -25,9 +25,11 @@
    REMITENTE con, por ejemplo:  La Alternativa Go <hola@alternativago.com>
    ========================================================================== */
 
-const DESTINO  = 'hugo4rubio@gmail.com';
-const MARCA    = 'La Alternativa Go';
-const AMARILLO = '#ffc300';
+const DESTINO   = 'hugo4rubio@gmail.com';
+const MARCA     = 'La Alternativa Go';
+const AMARILLO  = '#ffc300';
+const TELEFONO  = '+34 653 79 45 37';
+const WHATSAPP  = '34653794537';
 
 /* Mientras no verifiques un dominio propio, Resend deja enviar desde esta
    dirección suya hacia el correo con el que abriste la cuenta. */
@@ -140,6 +142,92 @@ function construirHtml({ filas, mensaje, telefono, email, asunto, dominio }) {
 </html>`;
 }
 
+/* Copia para el cliente: mismo formato, tono de confirmación en vez de aviso interno. */
+function construirHtmlCliente({ nombre, filas, mensaje, asunto }) {
+  const filasHtml = filas.map(([etiqueta, valor]) => `
+      <tr>
+        <td style="padding:12px 16px;border-bottom:1px solid #eeeeee;font-size:13px;
+                   color:#666666;white-space:nowrap;vertical-align:top;">${esc(etiqueta)}</td>
+        <td style="padding:12px 16px;border-bottom:1px solid #eeeeee;font-size:15px;
+                   color:#111111;font-weight:600;">${esc(valor)}</td>
+      </tr>`).join('');
+
+  const mensajeHtml = mensaje
+    ? esc(mensaje).replace(/\n/g, '<br>')
+    : '<span style="color:#999999;">Sin mensaje</span>';
+
+  return `<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><title>${esc(asunto)}</title></head>
+<body style="margin:0;padding:24px 12px;background:#f4f4f4;
+             font-family:Arial,Helvetica,sans-serif;">
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+         style="max-width:580px;margin:0 auto;">
+
+    <tr>
+      <td style="background:#000000;padding:24px;border-radius:10px 10px 0 0;">
+        <div style="color:${AMARILLO};font-size:12px;letter-spacing:2px;
+                    text-transform:uppercase;font-weight:bold;">${MARCA}</div>
+        <div style="color:#ffffff;font-size:22px;font-weight:bold;margin-top:6px;">
+          Hemos recibido tu solicitud
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="background:#ffffff;padding:16px;">
+        <div style="font-size:15px;color:#111111;line-height:1.6;">
+          Hola ${esc(nombre)}, gracias por escribirnos. Hemos recibido tu solicitud de
+          presupuesto y te contestaremos lo antes posible. Aquí tienes un resumen de lo
+          que nos has enviado:
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="background:#ffffff;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${filasHtml}
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="background:#ffffff;padding:16px;">
+        <div style="font-size:13px;color:#666666;margin-bottom:8px;">Tu mensaje</div>
+        <div style="background:#fafafa;border-left:4px solid ${AMARILLO};padding:14px;
+                    font-size:15px;color:#111111;line-height:1.6;">${mensajeHtml}</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="background:#ffffff;padding:8px 16px 24px;">
+        <div style="font-size:13px;color:#666666;margin-bottom:10px;">
+          ¿Alguna urgencia o quieres contarnos algo más? Escríbenos por WhatsApp o llámanos.
+        </div>
+        <a href="https://wa.me/${WHATSAPP}"
+           style="display:inline-block;background:${AMARILLO};color:#000000;
+                  text-decoration:none;font-weight:bold;font-size:14px;
+                  padding:12px 22px;border-radius:999px;margin-right:8px;">WhatsApp</a>
+        <a href="tel:${esc(TELEFONO)}"
+           style="display:inline-block;background:#000000;color:#ffffff;
+                  text-decoration:none;font-weight:bold;font-size:14px;
+                  padding:12px 22px;border-radius:999px;">Llamar</a>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="background:#000000;padding:16px;border-radius:0 0 10px 10px;
+                 text-align:center;font-size:12px;color:#999999;">
+        ${esc(MARCA)} · ${esc(TELEFONO)}
+      </td>
+    </tr>
+
+  </table>
+</body>
+</html>`;
+}
+
 /* ---------- Función ---------- */
 
 export default async function handler(req, res) {
@@ -230,6 +318,43 @@ export default async function handler(req, res) {
       const detalle = await respuesta.text();
       console.error('Resend ha devuelto un error:', respuesta.status, detalle);
       return res.status(502).json({ ok: false, error: 'El servicio de correo ha fallado' });
+    }
+
+    /* Copia de confirmación para el cliente. Si falla no rompemos la
+       respuesta: la solicitud ya ha llegado al negocio, que es lo esencial.
+       Nota: con el remitente de pruebas de Resend (onboarding@resend.dev)
+       solo se puede enviar a la cuenta con la que te diste de alta, así que
+       esta copia no llegará al cliente hasta que verifiques tu propio
+       dominio en Resend (ver cabecera de este archivo). */
+    try {
+      const htmlCliente = construirHtmlCliente({ nombre, filas, mensaje, asunto });
+      const textoCliente = [
+        `Hemos recibido tu solicitud — ${MARCA}`, '',
+        ...filas.map(([k, v]) => `${k}: ${v}`), '',
+        'Tu mensaje:', mensaje || '—',
+      ].join('\n');
+
+      const copia = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${clave}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: process.env.REMITENTE || REMITENTE_POR_DEFECTO,
+          to: [email],
+          subject: `Hemos recibido tu solicitud · ${MARCA}`,
+          html: htmlCliente,
+          text: textoCliente,
+          reply_to: DESTINO,     // si el cliente responde, va directo al negocio
+        }),
+      });
+
+      if (!copia.ok) {
+        console.error('No se pudo enviar la copia al cliente:', copia.status, await copia.text());
+      }
+    } catch (e) {
+      console.error('No se pudo enviar la copia al cliente:', e);
     }
 
     return res.status(200).json({ ok: true, success: 'true' });

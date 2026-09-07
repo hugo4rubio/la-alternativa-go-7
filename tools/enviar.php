@@ -17,9 +17,11 @@
 
 declare(strict_types=1);
 
-const DESTINO = 'hugo4rubio@gmail.com';
-const MARCA   = 'La Alternativa Go';
+const DESTINO  = 'hugo4rubio@gmail.com';
+const MARCA    = 'La Alternativa Go';
 const AMARILLO = '#ffc300';
+const TELEFONO = '+34 653 79 45 37';
+const WHATSAPP = '34653794537';
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -201,6 +203,86 @@ $html = '<!DOCTYPE html>
 </body>
 </html>';
 
+/* -------- Copia de confirmación para el cliente --------
+   Mismo formato, tono de confirmación en vez de aviso interno. */
+$filasHtmlCliente = $filasHtml;   // misma tabla de datos
+
+$htmlCliente = '<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><title>Hemos recibido tu solicitud</title></head>
+<body style="margin:0;padding:24px 12px;background:#f4f4f4;
+             font-family:Arial,Helvetica,sans-serif;">
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:580px;margin:0 auto;">
+
+    <tr>
+      <td style="background:#000000;padding:24px;border-radius:10px 10px 0 0;">
+        <div style="color:' . AMARILLO . ';font-size:12px;letter-spacing:2px;
+                    text-transform:uppercase;font-weight:bold;">' . MARCA . '</div>
+        <div style="color:#ffffff;font-size:22px;font-weight:bold;margin-top:6px;">
+          Hemos recibido tu solicitud
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="background:#ffffff;padding:16px;">
+        <div style="font-size:15px;color:#111111;line-height:1.6;">
+          Hola ' . esc($nombre) . ', gracias por escribirnos. Hemos recibido tu solicitud de
+          presupuesto y te contestaremos lo antes posible. Aquí tienes un resumen de lo
+          que nos has enviado:
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="background:#ffffff;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0">' . $filasHtmlCliente . '
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="background:#ffffff;padding:16px;">
+        <div style="font-size:13px;color:#666666;margin-bottom:8px;">Tu mensaje</div>
+        <div style="background:#fafafa;border-left:4px solid ' . AMARILLO . ';padding:14px;
+                    font-size:15px;color:#111111;line-height:1.6;">' . $mensajeHtml . '</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="background:#ffffff;padding:8px 16px 24px;">
+        <div style="font-size:13px;color:#666666;margin-bottom:10px;">
+          ¿Alguna urgencia o quieres contarnos algo más? Escríbenos por WhatsApp o llámanos.
+        </div>
+        <a href="https://wa.me/' . WHATSAPP . '"
+           style="display:inline-block;background:' . AMARILLO . ';color:#000000;
+                  text-decoration:none;font-weight:bold;font-size:14px;
+                  padding:12px 22px;border-radius:999px;margin-right:8px;">WhatsApp</a>
+        <a href="tel:' . esc(TELEFONO) . '"
+           style="display:inline-block;background:#000000;color:#ffffff;
+                  text-decoration:none;font-weight:bold;font-size:14px;
+                  padding:12px 22px;border-radius:999px;">Llamar</a>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="background:#000000;padding:16px;border-radius:0 0 10px 10px;
+                 text-align:center;font-size:12px;color:#999999;">
+        ' . esc(MARCA) . ' · ' . esc(TELEFONO) . '
+      </td>
+    </tr>
+
+  </table>
+</body>
+</html>';
+
+$textoPlanoCliente = "Hemos recibido tu solicitud — " . MARCA . "\n\n";
+foreach ($filas as $etiqueta => $valor) {
+    $textoPlanoCliente .= $etiqueta . ': ' . $valor . "\n";
+}
+$textoPlanoCliente .= "\nTu mensaje:\n" . ($mensaje !== '' ? $mensaje : '—') . "\n";
+
 /* -------- Envío: texto plano + HTML en el mismo correo -------- */
 $limite = 'lag_' . bin2hex(random_bytes(12));
 $dominio = $_SERVER['HTTP_HOST'] ?? 'localhost';
@@ -228,6 +310,30 @@ $cuerpo =
 $asuntoCodificado = '=?UTF-8?B?' . base64_encode($asunto) . '?=';
 
 if (mail(DESTINO, $asuntoCodificado, $cuerpo, $cabeceras)) {
+    /* Copia de confirmación para el cliente. Si falla no rompemos la
+       respuesta: la solicitud ya ha llegado al negocio, que es lo esencial. */
+    $limiteCliente = 'lag_' . bin2hex(random_bytes(12));
+    $cabecerasCliente = implode("\r\n", [
+        'From: ' . MARCA . ' <no-reply@' . $dominio . '>',
+        'Reply-To: ' . MARCA . ' <' . DESTINO . '>',   // si el cliente responde, va al negocio
+        'MIME-Version: 1.0',
+        'Content-Type: multipart/alternative; boundary="' . $limiteCliente . '"',
+        'X-Mailer: PHP/' . phpversion(),
+    ]);
+    $cuerpoCliente =
+        "--$limiteCliente\r\n" .
+        "Content-Type: text/plain; charset=UTF-8\r\n" .
+        "Content-Transfer-Encoding: 8bit\r\n\r\n" .
+        $textoPlanoCliente . "\r\n" .
+        "--$limiteCliente\r\n" .
+        "Content-Type: text/html; charset=UTF-8\r\n" .
+        "Content-Transfer-Encoding: 8bit\r\n\r\n" .
+        $htmlCliente . "\r\n" .
+        "--$limiteCliente--";
+    $asuntoClienteCodificado = '=?UTF-8?B?' . base64_encode('Hemos recibido tu solicitud · ' . MARCA) . '?=';
+
+    @mail($email, $asuntoClienteCodificado, $cuerpoCliente, $cabecerasCliente);
+
     echo json_encode(['ok' => true]);
 } else {
     http_response_code(500);
