@@ -20,9 +20,15 @@
 
    La clave se queda en Vercel, nunca en el código ni a la vista del visitante.
 
-   ¿Y si algún día quieres que el remitente sea tuyo en vez de resend.dev?
-   Verifica el dominio alternativago.com dentro de Resend y añade otra variable
-   REMITENTE con, por ejemplo:  La Alternativa Go <hola@alternativago.com>
+   Se mandan DOS correos:
+     · A ti, con la solicitud completa (Responder va directo al cliente).
+     · Al cliente, confirmándole que la hemos recibido, con un resumen de lo
+       que pidió. Sale desde hola@alternativago.com y, si contesta, te llega
+       a ti. Para eso el dominio alternativago.com tiene que estar verificado
+       en Resend (Domains).
+
+   Si quieres otro remitente, añade en Vercel la variable REMITENTE con,
+   por ejemplo:  La Alternativa Go <reservas@alternativago.com>
    ========================================================================== */
 
 const DESTINO  = 'hugo4rubio@gmail.com';
@@ -32,6 +38,14 @@ const AMARILLO = '#ffc300';
 /* Mientras no verifiques un dominio propio, Resend deja enviar desde esta
    dirección suya hacia el correo con el que abriste la cuenta. */
 const REMITENTE_POR_DEFECTO = 'La Alternativa Go <onboarding@resend.dev>';
+
+/* El correo al cliente tiene que salir desde el dominio verificado: Resend
+   no deja escribir a terceros desde onboarding@resend.dev. */
+const REMITENTE_CLIENTE = 'La Alternativa Go <hola@alternativago.com>';
+
+/* Botones del correo al cliente (mismos datos que assets/js/data.js) */
+const TELEFONO_NEGOCIO = '+34653794537';
+const WHATSAPP_NEGOCIO = '34653794537';
 
 /* ---------- Utilidades ---------- */
 
@@ -68,7 +82,20 @@ function esEmail(valor) {
 /* ---------- Plantilla del correo ----------
    Tablas y estilos en línea: es la única forma de que se vea igual en Gmail,
    en Outlook y en el móvil. Nada de CSS externo ni flexbox. */
-function construirHtml({ filas, mensaje, telefono, email, asunto, dominio }) {
+function boton(href, texto, fondo, color) {
+  return `<a href="${esc(href)}"
+           style="display:inline-block;background:${fondo};color:${color};
+                  text-decoration:none;font-weight:bold;font-size:14px;
+                  padding:12px 22px;border-radius:999px;margin:0 8px 8px 0;">${esc(texto)}</a>`;
+}
+
+function construirHtml({ titulo, intro, filas, mensaje, botones, pie, asunto }) {
+  const introHtml = intro ? `
+    <tr>
+      <td style="background:#ffffff;padding:20px 16px 4px;font-size:15px;
+                 color:#111111;line-height:1.6;">${intro}</td>
+    </tr>` : '';
+
   const filasHtml = filas.map(([etiqueta, valor]) => `
       <tr>
         <td style="padding:12px 16px;border-bottom:1px solid #eeeeee;font-size:13px;
@@ -95,11 +122,11 @@ function construirHtml({ filas, mensaje, telefono, email, asunto, dominio }) {
         <div style="color:${AMARILLO};font-size:12px;letter-spacing:2px;
                     text-transform:uppercase;font-weight:bold;">${MARCA}</div>
         <div style="color:#ffffff;font-size:22px;font-weight:bold;margin-top:6px;">
-          Nueva solicitud de presupuesto
+          ${esc(titulo)}
         </div>
       </td>
     </tr>
-
+${introHtml}
     <tr>
       <td style="background:#ffffff;">
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${filasHtml}
@@ -116,28 +143,39 @@ function construirHtml({ filas, mensaje, telefono, email, asunto, dominio }) {
     </tr>
 
     <tr>
-      <td style="background:#ffffff;padding:8px 16px 24px;">
-        <a href="tel:${esc(telefono)}"
-           style="display:inline-block;background:${AMARILLO};color:#000000;
-                  text-decoration:none;font-weight:bold;font-size:14px;
-                  padding:12px 22px;border-radius:999px;margin-right:8px;">Llamar</a>
-        <a href="mailto:${esc(email)}?subject=${encodeURIComponent('Re: ' + asunto)}"
-           style="display:inline-block;background:#000000;color:#ffffff;
-                  text-decoration:none;font-weight:bold;font-size:14px;
-                  padding:12px 22px;border-radius:999px;">Responder</a>
+      <td style="background:#ffffff;padding:8px 16px 16px;">
+        ${botones.join('\n        ')}
       </td>
     </tr>
 
     <tr>
       <td style="background:#000000;padding:16px;border-radius:0 0 10px 10px;
                  text-align:center;font-size:12px;color:#999999;">
-        Enviado desde el formulario de ${esc(dominio)}
+        ${esc(pie)}
       </td>
     </tr>
 
   </table>
 </body>
 </html>`;
+}
+
+/* Envía un correo por Resend. Devuelve true si salió bien. */
+async function enviarCorreo(clave, correo) {
+  const respuesta = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${clave}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(correo),
+  });
+
+  if (!respuesta.ok) {
+    const detalle = await respuesta.text();
+    console.error('Resend ha devuelto un error:', respuesta.status, detalle);
+  }
+  return respuesta.ok;
 }
 
 /* ---------- Función ---------- */
@@ -207,29 +245,71 @@ export default async function handler(req, res) {
     'Mensaje:', mensaje || '—',
   ].join('\n');
 
-  const html = construirHtml({ filas, mensaje, telefono, email, asunto, dominio });
+  const html = construirHtml({
+    titulo: 'Nueva solicitud de presupuesto',
+    filas, mensaje, asunto,
+    botones: [
+      boton(`tel:${telefono}`, 'Llamar', AMARILLO, '#000000'),
+      boton(`mailto:${email}?subject=${encodeURIComponent('Re: ' + asunto)}`,
+            'Responder', '#000000', '#ffffff'),
+    ],
+    pie: `Enviado desde el formulario de ${dominio}`,
+  });
+
+  /* ---- Copia para el cliente ---- */
+  const nombrePila = nombre.split(' ')[0];
+  const asuntoCliente = `Hemos recibido tu solicitud · ${MARCA}`;
+  const filasCliente = filas.filter(([k]) => k !== 'Cliente');
+
+  const htmlCliente = construirHtml({
+    titulo: 'Hemos recibido tu solicitud',
+    intro: `Hola ${esc(nombrePila)}, gracias por escribirnos. Revisamos tu solicitud
+            y te contactamos lo antes posible con el presupuesto. Te dejamos un
+            resumen de lo que nos has enviado:`,
+    filas: filasCliente, mensaje, asunto: asuntoCliente,
+    botones: [
+      boton(`https://wa.me/${WHATSAPP_NEGOCIO}`, 'WhatsApp', AMARILLO, '#000000'),
+      boton(`tel:${TELEFONO_NEGOCIO}`, 'Llamar', '#000000', '#ffffff'),
+    ],
+    pie: 'Si quieres cambiar algo, responde a este correo.',
+  });
+
+  const textoCliente = [
+    `Hola ${nombrePila}, gracias por escribirnos.`,
+    'Hemos recibido tu solicitud y te contactamos lo antes posible.', '',
+    ...filasCliente.map(([k, v]) => `${k}: ${v}`), '',
+    'Mensaje:', mensaje || '—', '',
+    `WhatsApp / teléfono: ${TELEFONO_NEGOCIO}`,
+    `— ${MARCA}`,
+  ].join('\n');
 
   try {
-    const respuesta = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${clave}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: process.env.REMITENTE || REMITENTE_POR_DEFECTO,
-        to: [DESTINO],
-        subject: asunto,
-        html,
-        text: texto,
-        reply_to: email,        // responder va directo al cliente
-      }),
+    const aTi = await enviarCorreo(clave, {
+      from: process.env.REMITENTE || REMITENTE_POR_DEFECTO,
+      to: [DESTINO],
+      subject: asunto,
+      html,
+      text: texto,
+      reply_to: email,        // responder va directo al cliente
     });
 
-    if (!respuesta.ok) {
-      const detalle = await respuesta.text();
-      console.error('Resend ha devuelto un error:', respuesta.status, detalle);
+    if (!aTi) {
       return res.status(502).json({ ok: false, error: 'El servicio de correo ha fallado' });
+    }
+
+    /* Si la copia al cliente falla, la solicitud ya te ha llegado a ti:
+       se deja anotado en los logs de Vercel y no se le muestra error. */
+    try {
+      await enviarCorreo(clave, {
+        from: process.env.REMITENTE || REMITENTE_CLIENTE,
+        to: [email],
+        subject: asuntoCliente,
+        html: htmlCliente,
+        text: textoCliente,
+        reply_to: DESTINO,      // si contesta, te llega a ti
+      });
+    } catch (e) {
+      console.error('No se ha podido enviar la copia al cliente:', e);
     }
 
     return res.status(200).json({ ok: true, success: 'true' });

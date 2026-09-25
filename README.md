@@ -173,10 +173,17 @@ Vercel no ejecuta PHP, así que el correo lo manda `api/enviar.js`. Vercel detec
 
 La clave se queda guardada en Vercel: nunca está en el código ni la ve el visitante.
 
-Mientras no verifiques un dominio propio, el remitente será `onboarding@resend.dev`, que es la
-dirección de pruebas de Resend. Cuando quieras que ponga el tuyo, verifica `alternativago.com`
-dentro de Resend y añade otra variable `REMITENTE` con
-`La Alternativa Go <hola@alternativago.com>`.
+Cada envío manda **dos correos**:
+
+- **A ti**, con la solicitud completa. Sale desde `onboarding@resend.dev`, y el botón Responder
+  va directo al cliente.
+- **Al cliente**, confirmando que la hemos recibido, con un resumen y los botones WhatsApp y
+  Llamar. Sale desde `hola@alternativago.com`, y si contesta, te llega a ti. Para eso
+  `alternativago.com` tiene que estar verificado en Resend (**Domains**). Si esta copia falla,
+  tu correo llega igual y el error queda en los logs de Vercel.
+
+Para usar otro remitente en los dos, añade la variable `REMITENTE`, por ejemplo
+`La Alternativa Go <reservas@alternativago.com>`.
 
 ### Cómo llega el correo
 
