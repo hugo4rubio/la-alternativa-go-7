@@ -787,3 +787,81 @@
 }
 
 .areas li:hover { border-color: var(--c-yellow); color: var(--c-yellow); }
+
+/* ==========================================================================
+   PREGUNTAS FRECUENTES — acordeón accesible con <details>
+   ========================================================================== */
+.faq__inner { max-width: 880px; }
+
+.faq {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.faq__item {
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  background: var(--c-white);
+  transition: border-color .3s var(--ease), box-shadow .3s var(--ease);
+}
+
+.faq__item[open] {
+  border-color: var(--c-yellow);
+  box-shadow: var(--shadow-sm);
+}
+
+.faq__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-5);
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq__q::-webkit-details-marker { display: none; }
+
+.faq__q h3 {
+  margin: 0;
+  font-size: var(--fs-base);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+/* Botón "+" que gira a "×" al abrir */
+.faq__q::after {
+  content: "+";
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 1.35rem;
+  line-height: 1;
+  background: var(--c-yellow);
+  color: var(--c-black);
+  transition: transform .3s var(--ease);
+}
+
+.faq__item[open] .faq__q::after { transform: rotate(45deg); }
+
+.faq__q:hover h3 { text-decoration: underline; text-decoration-color: var(--c-yellow); text-underline-offset: 4px; }
+
+.faq__a {
+  padding: 0 var(--sp-5) var(--sp-5);
+  color: var(--c-text-soft);
+}
+
+.faq__a p { margin: 0; }
+.faq__a a { color: var(--c-black); font-weight: 600; text-decoration: underline; text-decoration-color: var(--c-yellow); }
+
+@media (max-width: 640px) {
+  .faq__q { padding: var(--sp-4); }
+  .faq__a { padding: 0 var(--sp-4) var(--sp-4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq__q::after { transition: none; }
+}
