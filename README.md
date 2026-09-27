@@ -109,6 +109,22 @@ La web ya está preparada; lo que más pesa en una búsqueda local se hace fuera
 6. **Instagram** — comprueba que `https://www.instagram.com/la_alternativa_go/` es la cuenta
    correcta (está en `data.js`, en el `<head>` y en el pie) y pon el enlace a la web en la bio.
 
+### ⚠️ Después de cambiar `data.js`, ejecuta el prerender
+
+Servicios, carta, eventos, galería y zonas se generan desde `data.js`, pero además están
+**escritos en el HTML** (entre `<!-- prerender -->` … `<!-- /prerender -->`) para que los lean
+todos los buscadores, las vistas previas de redes y las extensiones de SEO, no solo Google.
+Si cambias `data.js`, actualiza ese HTML con:
+
+```bash
+node tools/prerender.js
+```
+
+### URL limpia
+
+Los enlaces del menú desplazan la página sin añadir `#seccion` a la URL (`nav.js`), así la
+dirección coincide siempre con la canónica `https://www.alternativago.com/`.
+
 ---
 
 ## Cómo verlo

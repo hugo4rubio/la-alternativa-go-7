@@ -35,6 +35,32 @@ window.LAG_Nav = (function () {
       if (window.innerWidth > 880) setOpen(false);
     });
 
+    /* ---- Enlaces internos sin "#" en la URL ----
+       Desplaza hasta la sección pero deja la URL limpia (la canónica "/"),
+       así nunca se comparte ni se analiza como /#inicio, /#contacto… */
+    function cleanUrl() {
+      if (location.hash && window.history && history.replaceState) {
+        history.replaceState(null, '', location.pathname + location.search);
+      }
+    }
+
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (!a || a.classList.contains('skip-link')) return;
+      var id = a.getAttribute('href');
+      if (id.length < 2) return;
+      var target = document.getElementById(id.slice(1));
+      if (!target) return;
+      e.preventDefault();
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      cleanUrl();
+    });
+
+    // Si se llega con un enlace tipo /#contacto, el navegador ya ha hecho el
+    // desplazamiento: limpiamos la URL después.
+    window.addEventListener('load', function () { window.setTimeout(cleanUrl, 600); });
+
     /* ---- Header sólido al hacer scroll ---- */
     function onScroll() {
       header.classList.toggle('is-stuck', window.scrollY > 40);
