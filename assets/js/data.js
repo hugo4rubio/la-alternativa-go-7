@@ -132,13 +132,28 @@ window.LAG_DATA = (function () {
   ];
 
   /* ---------- BLOQUE 6 · Galería ---------- */
+  /* Fotos locales optimizadas (WebP): "-sm" para la cuadrícula y la versión
+     grande para el visor a pantalla completa. */
+  var GAL = 'assets/img/galeria/';
+  function gal(file, alt) {
+    return { src: GAL + file + '-sm.webp', full: GAL + file + '.webp', alt: alt };
+  }
   var gallery = [
-    { src: IMG.festival,  alt: 'Foodtruck de catering en un festival de la provincia de Toledo' },
-    { src: IMG.people,    alt: 'Invitados comiendo street food en un evento en Talavera de la Reina' },
-    { src: IMG.birthday,  alt: 'Catering de cumpleaños con foodtruck en Talavera de la Reina' },
-    { src: IMG.corporate, alt: 'Catering para evento de empresa con foodtruck en Toledo' },
-    { src: IMG.molletes,  alt: 'Molletes preparados en la foodtruck durante un catering' },
-    { src: IMG.foodtruck, alt: 'Foodtruck amarilla de La Alternativa Go lista para un evento' }
+    gal('16-equipo-foodtruck-evento', 'Equipo de camareros de La Alternativa Go junto a la foodtruck en un evento en Talavera de la Reina'),
+    gal('03-foodtruck-roll-up',       'Foodtruck amarilla de La Alternativa Go montada para un evento en la provincia de Toledo'),
+    gal('04-ensaladas-langostinos',   'Ensaladas con langostinos emplatadas para un catering de celebración'),
+    gal('02-foodtruck-equipo-barra',  'Equipo de La Alternativa Go atendiendo en la barra de la foodtruck'),
+    gal('07-canapes-variados',        'Canapés variados de salmón, paté y membrillo para catering de eventos'),
+    gal('13-cortador-jamon',          'Cortador de jamón a cuchillo en un catering al aire libre en Toledo'),
+    gal('05-ensaladilla-langostinos', 'Ensaladilla con langostinos servida en cuencos individuales'),
+    gal('01-foodtruck-auditorio',     'Foodtruck de catering con mesas altas en un evento de empresa en Talavera'),
+    gal('15-tablas-queso-jamon',      'Tablas de queso curado y jamón para un cóctel de empresa'),
+    gal('11-desayuno-bolleria',       'Desayuno de catering con croissants de jamón y queso y bollería variada'),
+    gal('14-barra-bebidas-carpa',     'Barra de bebidas bajo carpa con cava y copas preparadas para un evento'),
+    gal('12-cafe-y-zumos',            'Estación de café, zumos y bollería para un desayuno de empresa'),
+    gal('06-vino-men-de-mencia',      'Vino tinto D.O. Bierzo servido en mesa alta durante un evento al aire libre'),
+    gal('10-mesa-alta-desayuno',      'Mesa alta y mesa de desayuno preparadas en una finca de la provincia de Toledo'),
+    gal('09-mesa-exterior-arbol',     'Mesa alta con servilletero de La Alternativa Go en un evento al aire libre')
   ];
 
   /* ---------- BLOQUE 8 · Zonas de servicio (SEO local) ---------- */

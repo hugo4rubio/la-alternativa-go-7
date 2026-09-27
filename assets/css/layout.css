@@ -270,3 +270,5 @@
 }
 
 .site-footer__bottom a { text-decoration: underline; }
+
+.site-footer__credit { margin-top: var(--sp-2); opacity: .75; }

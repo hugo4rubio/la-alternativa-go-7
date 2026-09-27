@@ -47,7 +47,7 @@ window.LAG_Gallery = (function () {
     if (!items.length) return;
     index = (i + items.length) % items.length;
     var img = lightbox.querySelector('.lightbox__img');
-    img.src = items[index].src;
+    img.src = items[index].full || items[index].src;
     img.alt = items[index].alt || '';
   }
 
@@ -74,7 +74,8 @@ window.LAG_Gallery = (function () {
       return '' +
         '<button class="gallery__item" type="button" data-index="' + i + '" ' +
                 'aria-label="Ampliar: ' + esc(item.alt) + '" data-reveal>' +
-          '<img src="' + esc(item.src) + '" alt="' + esc(item.alt) + '" loading="lazy">' +
+          '<img src="' + esc(item.src) + '" alt="' + esc(item.alt) + '" ' +
+               'width="800" height="800" loading="lazy" decoding="async">' +
         '</button>';
     }).join('');
 
