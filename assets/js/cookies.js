@@ -5,7 +5,8 @@
    · La primera visita muestra el banner. La elección se guarda en el navegador
      durante 12 meses (localStorage, con respaldo en memoria si está bloqueado).
    · "Aceptar todas"  → ejecuta las funciones registradas en onAccept().
-   · "Solo las necesarias" → no se carga nada opcional.
+   · "Solo las necesarias" → no se carga nada opcional y se ejecutan las
+     funciones de onReject() (para retirar lo que se hubiera cargado).
    · El enlace "Configurar cookies" del pie vuelve a abrir el banner.
 
    IMPORTANTE: si algún día añades Google Analytics, Meta Pixel o similar,
@@ -21,6 +22,7 @@ window.LAG_Cookies = (function () {
   var MAX_AGE_DAYS = 365;
   var memoryStore = null;          // respaldo si localStorage está bloqueado
   var callbacks = [];
+  var rejectCallbacks = [];
 
   /* ---- Lectura y escritura tolerantes a fallos ---- */
   function read() {
@@ -52,8 +54,12 @@ window.LAG_Cookies = (function () {
     if (record && record.analytics && !isExpired(record)) fn();
   }
 
-  function runCallbacks() {
-    callbacks.forEach(function (fn) {
+  function onReject(fn) {
+    if (typeof fn === 'function') rejectCallbacks.push(fn);
+  }
+
+  function runCallbacks(list) {
+    (list || callbacks).forEach(function (fn) {
       try { fn(); } catch (e) { /* un fallo no debe romper la página */ }
     });
   }
@@ -80,7 +86,7 @@ window.LAG_Cookies = (function () {
 
     function decide(analytics) {
       write({ analytics: analytics, necessary: true, date: Date.now() });
-      if (analytics) runCallbacks();
+      runCallbacks(analytics ? callbacks : rejectCallbacks);
       close();
     }
 
@@ -99,5 +105,5 @@ window.LAG_Cookies = (function () {
     }
   }
 
-  return { init: init, onAccept: onAccept };
+  return { init: init, onAccept: onAccept, onReject: onReject };
 })();

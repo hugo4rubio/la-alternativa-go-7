@@ -357,6 +357,14 @@ window.LAG_Form = (function () {
             return;
           }
 
+          // Aviso para la analítica (analytics.js); no envía datos personales
+          try {
+            document.dispatchEvent(new CustomEvent('lag:lead', { detail: {
+              service: form.elements.servicio ? form.elements.servicio.value : '',
+              eventType: form.elements.tipoEvento ? form.elements.tipoEvento.value : ''
+            } }));
+          } catch (e) { /* navegador antiguo: seguimos sin medir */ }
+
           form.reset();
           setStatus(status, MESSAGES.ok, 'ok');
         })

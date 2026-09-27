@@ -20,7 +20,9 @@ window.LAG_DATA = (function () {
     // Enlace para pedir reseñas de Google Business Profile
     // (en la ficha: "Pedir reseñas" → copiar enlace, tipo https://g.page/r/XXXX/review).
     // Mientras esté vacío, los enlaces de reseñas no se muestran.
-    googleReviews: ''
+    googleReviews: '',
+    // Google Analytics 4: solo se carga si el visitante acepta las cookies
+    ga4Id: 'G-7920N6SBF6'
   };
 
   /* Base de las imágenes.
