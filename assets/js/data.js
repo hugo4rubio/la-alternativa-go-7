@@ -15,22 +15,23 @@ window.LAG_DATA = (function () {
     whatsapp: '34653794537',                 // sin + ni espacios, para wa.me
     phoneDisplay: '+34 653 79 45 37',
     phoneLink: '+34653794537',
-    waMessage: 'Hola, me gustaría pedir presupuesto para alquilar la foodtruck con catering.'
+    waMessage: 'Hola, me gustaría pedir presupuesto para alquilar la foodtruck con catering.',
+    instagram: 'https://www.instagram.com/la_alternativa_go/',
+    // Enlace para pedir reseñas de Google Business Profile
+    // (en la ficha: "Pedir reseñas" → copiar enlace, tipo https://g.page/r/XXXX/review).
+    // Mientras esté vacío, los enlaces de reseñas no se muestran.
+    googleReviews: ''
   };
 
   /* Base de las imágenes.
      Si descargas las fotos a assets/img (ver tools/descargar-imagenes.sh),
      el script cambia estas rutas automáticamente. */
   var IMG = {
-    molletes:  'https://go-la-alternativa.lovable.app/assets/molletes-B9-d8B8x.jpg',
-    raciones:  'https://go-la-alternativa.lovable.app/assets/raciones-awO_NZwh.jpg',
-    patatas:   'https://go-la-alternativa.lovable.app/assets/patatas-DdcZ9OKu.jpg',
-    pincho:    'https://go-la-alternativa.lovable.app/assets/pincho-zPvPMn5n.jpg',
-    festival:  'https://go-la-alternativa.lovable.app/assets/gal-festival-BaoRu4VW.jpg',
-    people:    'https://go-la-alternativa.lovable.app/assets/gal-people-CXD2jUQX.jpg',
-    birthday:  'https://go-la-alternativa.lovable.app/assets/gal-birthday-BQISnI2h.jpg',
-    corporate: 'https://go-la-alternativa.lovable.app/assets/gal-corporate-D7jUyK9-.jpg',
-    foodtruck: 'https://go-la-alternativa.lovable.app/__l5e/assets-v1/ecceaca8-2824-4d01-a760-b88249148760/foodtruck.jpg'
+    molletes:  'assets/img/molletes.jpg',
+    raciones:  'assets/img/raciones.jpg',
+    patatas:   'assets/img/patatas.jpg',
+    pincho:    'assets/img/pincho.jpg',
+    foodtruck: 'assets/img/foodtruck.jpg'
   };
 
 

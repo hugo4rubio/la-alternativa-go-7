@@ -43,7 +43,13 @@
   <meta name="twitter:description" content="Catering y alquiler de food truck para bodas, cumpleaños, empresas y festivales en Talavera de la Reina y Toledo.">
   <meta name="twitter:image" content="https://www.alternativago.com/assets/img/og-foodtruck-catering-talavera.jpg">
 
-  <link rel="icon" href="https://go-la-alternativa.lovable.app/__l5e/assets-v1/32ec6c4f-a5d9-499d-bb40-7dfcc9fcb85c/logo.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+
+  <!-- Google Search Console: pega aquí la etiqueta de verificación que te da
+       search.google.com/search-console (método "Etiqueta HTML") y descoméntala.
+  <meta name="google-site-verification" content="PEGA-AQUI-TU-CODIGO">
+  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -80,7 +86,7 @@
           "https://www.alternativago.com/assets/img/galeria/04-ensaladas-langostinos.webp",
           "https://www.alternativago.com/assets/img/galeria/03-foodtruck-roll-up.webp"
         ],
-        "logo": "https://go-la-alternativa.lovable.app/__l5e/assets-v1/32ec6c4f-a5d9-499d-bb40-7dfcc9fcb85c/logo.png",
+        "logo": "https://www.alternativago.com/assets/img/logo.png",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Talavera de la Reina",
@@ -117,7 +123,10 @@
         ],
         "hasOfferCatalog": { "@id": "https://www.alternativago.com/#servicios" },
         "hasMenu": { "@id": "https://www.alternativago.com/#carta" },
-        "sameAs": ["https://laalternativa.es"],
+        "sameAs": [
+          "https://laalternativa.es",
+          "https://www.instagram.com/la_alternativa_go/"
+        ],
         "potentialAction": {
           "@type": "ReserveAction",
           "target": "https://www.alternativago.com/#contacto",
@@ -145,7 +154,7 @@
     <div class="container site-header__inner">
       <a class="brand" href="#inicio" aria-label="La Alternativa Go — inicio">
         <img class="brand__logo"
-             src="https://go-la-alternativa.lovable.app/__l5e/assets-v1/32ec6c4f-a5d9-499d-bb40-7dfcc9fcb85c/logo.png"
+             src="assets/img/logo.png"
              alt="Logotipo de La Alternativa Go" width="52" height="52">
         <span class="brand__text">La Alternativa <em>Go</em></span>
       </a>
@@ -178,7 +187,7 @@
          ============================================================ -->
     <section class="hero" id="inicio" aria-labelledby="titulo-inicio">
       <div class="hero__media">
-        <img src="https://go-la-alternativa.lovable.app/__l5e/assets-v1/ecceaca8-2824-4d01-a760-b88249148760/foodtruck.jpg"
+        <img src="assets/img/foodtruck.jpg"
              alt="Food truck amarilla de La Alternativa Go preparada para un catering en Talavera de la Reina"
              fetchpriority="high" width="1600" height="900">
       </div>
@@ -234,7 +243,7 @@
         <!-- Foto de la foodtruck con su cartel -->
         <figure class="about__media">
           <div class="about__frame">
-            <img src="https://go-la-alternativa.lovable.app/__l5e/assets-v1/ecceaca8-2824-4d01-a760-b88249148760/foodtruck.jpg"
+            <img src="assets/img/foodtruck.jpg"
                  alt="La foodtruck de La Alternativa Go montada en un evento en Talavera de la Reina"
                  loading="lazy" width="800" height="1000">
           </div>
@@ -470,7 +479,7 @@
 
         <div class="alt__logoWrap">
           <img class="alt__logo"
-               src="https://go-la-alternativa.lovable.app/__l5e/assets-v1/32ec6c4f-a5d9-499d-bb40-7dfcc9fcb85c/logo.png"
+               src="assets/img/logo.png"
                alt="Logotipo de La Alternativa, gastro-bar en Talavera de la Reina"
                width="118" height="118" loading="lazy">
         </div>
@@ -757,6 +766,15 @@
                 <span aria-hidden="true">🌐</span>
                 <a href="https://laalternativa.es" target="_blank" rel="noopener noreferrer">laalternativa.es</a>
               </li>
+              <li>
+                <span aria-hidden="true">📸</span>
+                <a href="https://www.instagram.com/la_alternativa_go/" target="_blank" rel="noopener noreferrer">@la_alternativa_go</a>
+              </li>
+              <!-- Se muestra solo si hay enlace en data.js → site.googleReviews -->
+              <li data-review hidden>
+                <span aria-hidden="true">⭐</span>
+                <a class="js-review-link" href="#" target="_blank" rel="noopener noreferrer">Déjanos tu reseña en Google</a>
+              </li>
             </ul>
             <p class="contact-card__claim">Tu evento.<br>Nuestra foodtruck.</p>
             <a class="btn btn--primary btn--block" id="waCard" href="#" rel="noopener">
@@ -796,7 +814,7 @@
     <div class="container site-footer__inner">
       <div class="site-footer__brand">
         <img class="brand__logo"
-             src="https://go-la-alternativa.lovable.app/__l5e/assets-v1/32ec6c4f-a5d9-499d-bb40-7dfcc9fcb85c/logo.png"
+             src="assets/img/logo.png"
              alt="" width="56" height="56" loading="lazy">
         <p class="site-footer__claim">Tu evento. Nuestra foodtruck.</p>
         <p style="font-size:.8125rem">
@@ -837,6 +855,8 @@
           <li><a id="waFooter" href="#" rel="noopener">WhatsApp</a></li>
           <li>Talavera de la Reina (Toledo)</li>
           <li><a href="https://laalternativa.es" target="_blank" rel="noopener noreferrer">laalternativa.es</a></li>
+          <li><a href="https://www.instagram.com/la_alternativa_go/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li data-review hidden><a class="js-review-link" href="#" target="_blank" rel="noopener noreferrer">Reseñas en Google</a></li>
         </ul>
       </div>
     </div>
@@ -887,6 +907,7 @@
   <script src="assets/js/gallery.js"></script>
   <script src="assets/js/form.js"></script>
   <script src="assets/js/whatsapp.js"></script>
+  <script src="assets/js/social.js"></script>
   <script src="assets/js/cookies.js"></script>
   <script src="assets/js/ui.js"></script>
   <script src="assets/js/main.js"></script>

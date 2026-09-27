@@ -134,6 +134,8 @@ p { text-wrap: pretty; }
 ::selection { background: var(--c-yellow); color: var(--c-black); }
 
 /* ---------- Utilidades ---------- */
+[hidden] { display: none !important; }
+
 .container {
   width: 100%;
   max-width: var(--container);

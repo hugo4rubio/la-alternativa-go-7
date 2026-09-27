@@ -15,6 +15,7 @@
     if (window.LAG_Nav)      window.LAG_Nav.init();
     if (window.LAG_Form)     window.LAG_Form.init();
     if (window.LAG_WhatsApp) window.LAG_WhatsApp.init();
+    if (window.LAG_Social)   window.LAG_Social.init();
     if (window.LAG_Cookies)  window.LAG_Cookies.init();
 
     // 3. Detalles visuales (observa también el contenido recién generado)

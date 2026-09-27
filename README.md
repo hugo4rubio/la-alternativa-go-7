@@ -59,36 +59,55 @@ la-alternativa-go/
 
 ---
 
-## Los 8 bloques y su SEO
+## Los bloques y su SEO
 
 Cada bloque tiene su propio `<h2>` con palabra clave, texto optimizado y datos estructurados
 (`application/ld+json`) que Google lee por separado.
 
 | # | Bloque | H2 / keyword | Datos estructurados |
 |---|---|---|---|
-| 1 | Inicio | Alquiler de foodtruck con catering para eventos *(es el H1)* | `WebPage` |
+| 1 | Inicio | Catering y foodtruck en Talavera de la Reina *(es el H1)* | `WebPage` |
 | 2 | Quiénes somos | Foodtruck y catering en Talavera de la Reina | `AboutPage` |
 | 3 | Servicios | Alquiler de foodtruck y catering para eventos | `OfferCatalog` + 3 `Service` |
 | 4 | Carta | Carta de street food para tu catering | `Menu` + `MenuItem` con precios |
 | 5 | Eventos | Catering para bodas, cumpleaños y eventos de empresa | `ItemList` |
-| 6 | Galería | Nuestra foodtruck en eventos de Talavera y Toledo | `ImageGallery` |
+| 6 | Galería | Nuestra foodtruck en eventos de Talavera de la Reina | `ImageGallery` |
 | 7 | La Alternativa | ¿Conoces La Alternativa? | `Organization` |
+| — | Preguntas frecuentes | Catering y foodtruck en Talavera de la Reina: lo que más nos preguntáis | `FAQPage` |
 | 8 | Reservas | Pide presupuesto de catering en Talavera de la Reina | `ContactPage` + `ContactPoint` |
 
 En el `<head>` va además la ficha del negocio (`LocalBusiness` + `FoodEstablishment`) con teléfono,
 coordenadas de Talavera de la Reina y área de servicio (ciudad + provincia de Toledo), más las
 etiquetas `geo.*`, Open Graph, Twitter Card y el canonical.
 
-### Qué falta para posicionar de verdad
+### Palabras clave objetivo
 
-El código ya está listo, pero el SEO local se gana sobre todo fuera de la web:
+1. **catering en Talavera de la Reina**
+2. **foodtruck / food truck en Talavera de la Reina**
 
-1. **Crea la ficha de Google Business Profile** («catering Talavera de la Reina» sale casi siempre
-   del mapa, no de la web). Es lo que más mueve la aguja.
-2. **Da de alta el sitio en Google Search Console** y envía `sitemap.xml`.
-3. Rellena los datos del titular en las páginas legales (Google desconfía de negocios sin ellos).
-4. Cuando tengas email, añádelo al JSON-LD del `<head>` y a la tarjeta de contacto.
-5. Consigue reseñas: son el factor local con más peso después de la ficha.
+Están en el `<title>`, la meta descripción, el H1, la sección de preguntas frecuentes y la ficha
+del negocio (`LocalBusiness`, con los pueblos donde se da servicio, `knowsAbout` e Instagram en
+`sameAs`). El `sitemap.xml` incluye las fotos de la galería para Google Imágenes.
+
+### Qué falta para posicionar de verdad (fuera del código)
+
+La web ya está preparada; lo que más pesa en una búsqueda local se hace fuera de ella:
+
+1. **Google Business Profile** — crea o reclama la ficha. Categoría principal *Servicio de catering*,
+   secundaria *Food truck*, zona de servicio Talavera de la Reina + provincia de Toledo, fotos,
+   teléfono `+34 653 79 45 37` y la web. Es lo que más mueve la aguja.
+2. **Reseñas** — en la ficha, *Pedir reseñas* → copia el enlace y pégalo en `assets/js/data.js`
+   → `site.googleReviews`. Aparecerá solo el enlace «Déjanos tu reseña en Google» en la tarjeta de
+   contacto y en el pie. Pide una reseña después de cada evento.
+3. **Google Search Console** — añade la propiedad `https://www.alternativago.com/`, elige
+   verificación por *Etiqueta HTML*, pega el código en la línea comentada
+   `google-site-verification` del `<head>` de `index.html`, publica y envía `sitemap.xml`.
+4. **Mismos datos en todas partes** — nombre «La Alternativa Go», teléfono y «Talavera de la Reina»
+   igual en Instagram, Facebook, laalternativa.es y directorios (Bodas.net, Páginas Amarillas…).
+5. **Enlace desde laalternativa.es** — pega el fragmento de `tools/enlace-para-laalternativa.html`
+   en la web del gastro-bar.
+6. **Instagram** — comprueba que `https://www.instagram.com/la_alternativa_go/` es la cuenta
+   correcta (está en `data.js`, en el `<head>` y en el pie) y pon el enlace a la web en la bio.
 
 ---
 
@@ -227,8 +246,16 @@ Y actualiza la tabla de cookies en `paginas/politica-cookies.html`.
 
 ## Imágenes
 
-Las fotos se cargan desde el dominio original de Lovable, así que la web se ve bien nada más
-abrirla. Para dejarla **100 % independiente**:
+✅ **Ya hecho:** todas las imágenes están en `assets/img/` y la web no depende de Lovable.
+`foodtruck.jpg` y `logo.png` están recomprimidas, y `favicon.png` / `apple-touch-icon.png` se
+generaron a partir del logo. **No vuelvas a lanzar el script**: sobrescribiría esas versiones
+optimizadas con las originales (mucho más pesadas).
+
+Las fotos de la galería están en `assets/img/galeria/` (WebP, `-sm` de 1000px para la cuadrícula
+y 2048px para el visor), y `og-foodtruck-catering-talavera.jpg` (1200×630) es la imagen al
+compartir en redes.
+
+Script original, por referencia:
 
 ```bash
 bash tools/descargar-imagenes.sh
@@ -236,8 +263,7 @@ bash tools/descargar-imagenes.sh
 
 Descarga todo a `assets/img/` y reescribe las rutas en `index.html`, `paginas/*.html` y
 `assets/js/data.js`. Si no tienes `curl`, copia las imágenes a mano en `assets/img/` con estos
-nombres: `logo.png`, `foodtruck.jpg`, `molletes.jpg`, `raciones.jpg`, `patatas.jpg`, `pincho.jpg`,
-`gal-festival.jpg`, `gal-people.jpg`, `gal-birthday.jpg`, `gal-corporate.jpg`.
+nombres: `logo.png`, `foodtruck.jpg`, `molletes.jpg`, `raciones.jpg`, `patatas.jpg`, `pincho.jpg`.
 
 ### Los iconos de Servicios
 
@@ -258,8 +284,9 @@ por una imagen en `assets/js/services.js`.
       con la realidad (montaje, personal, menaje, horarios). Ajusta o borra lo que no aplique.
 - [ ] **Condiciones de reserva**: señal, formas de pago y plazos de cancelación
 - [ ] Email de contacto, cuando lo tengas
-- [ ] Ejecutar `tools/descargar-imagenes.sh` si quieres imágenes propias
-- [ ] Subir el dominio y enviar `sitemap.xml` a Google Search Console
+- [x] Imágenes locales (ya no depende de Lovable)
+- [ ] Subir el dominio, verificar Google Search Console y enviar `sitemap.xml`
+- [ ] Crear la ficha de Google Business Profile y pegar el enlace de reseñas en `data.js`
 
 ---
 
