@@ -549,12 +549,44 @@ select.field__input option { background: var(--c-black); color: var(--c-white); 
 
 .lightbox.is-open { opacity: 1; visibility: visible; }
 
+.lightbox__figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  min-width: 0;
+}
+
 .lightbox__img {
-  max-width: min(1000px, 92vw);
-  max-height: 84vh;
+  max-width: min(1100px, 86vw);
+  max-height: 80vh;
   width: auto;
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
+  animation: lightbox-in .35s var(--ease);
+}
+
+.lightbox__caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  width: 100%;
+  font-size: var(--fs-sm);
+  color: var(--c-white);
+}
+
+.lightbox__title { font-weight: 600; }
+.lightbox__count { color: var(--c-paper-70); font-variant-numeric: tabular-nums; }
+
+@keyframes lightbox-in {
+  from { opacity: 0; transform: scale(.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox__img { animation: none; }
 }
 
 .lightbox__close,

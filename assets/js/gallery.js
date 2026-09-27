@@ -24,7 +24,13 @@ window.LAG_Gallery = (function () {
     lightbox.innerHTML =
       '<button class="lightbox__close" aria-label="Cerrar">&times;</button>' +
       '<button class="lightbox__nav lightbox__nav--prev" aria-label="Anterior">&#8249;</button>' +
-      '<img class="lightbox__img" src="" alt="">' +
+      '<figure class="lightbox__figure">' +
+        '<img class="lightbox__img" src="" alt="">' +
+        '<figcaption class="lightbox__caption">' +
+          '<span class="lightbox__title"></span>' +
+          '<span class="lightbox__count" aria-live="polite"></span>' +
+        '</figcaption>' +
+      '</figure>' +
       '<button class="lightbox__nav lightbox__nav--next" aria-label="Siguiente">&#8250;</button>';
     document.body.appendChild(lightbox);
 
@@ -47,8 +53,19 @@ window.LAG_Gallery = (function () {
     if (!items.length) return;
     index = (i + items.length) % items.length;
     var img = lightbox.querySelector('.lightbox__img');
+    img.style.animation = 'none';
+    void img.offsetWidth;            // reinicia la animación de entrada
+    img.style.animation = '';
     img.src = items[index].full || items[index].src;
     img.alt = items[index].alt || '';
+    lightbox.querySelector('.lightbox__title').textContent = items[index].title || '';
+    lightbox.querySelector('.lightbox__count').textContent = (index + 1) + ' / ' + items.length;
+
+    // Precarga las vecinas para que pasar de foto sea instantáneo
+    [index + 1, index - 1].forEach(function (n) {
+      var next = items[(n + items.length) % items.length];
+      new Image().src = next.full || next.src;
+    });
   }
 
   function step(delta) { show(index + delta); }
@@ -71,11 +88,17 @@ window.LAG_Gallery = (function () {
     if (!host || !data.gallery) return;
 
     host.innerHTML = data.gallery.map(function (item, i) {
+      var feature = i === 0;
+      var srcset = item.full
+        ? ' srcset="' + esc(item.src) + ' 1000w, ' + esc(item.full) + ' 2048w"' +
+          ' sizes="' + (feature ? '(max-width: 640px) 92vw, 780px' : '(max-width: 640px) 46vw, 380px') + '"'
+        : '';
       return '' +
-        '<button class="gallery__item" type="button" data-index="' + i + '" ' +
-                'aria-label="Ampliar: ' + esc(item.alt) + '" data-reveal>' +
-          '<img src="' + esc(item.src) + '" alt="' + esc(item.alt) + '" ' +
-               'width="800" height="800" loading="lazy" decoding="async">' +
+        '<button class="gallery__item' + (feature ? ' gallery__item--feature' : '') + '" type="button" ' +
+                'data-index="' + i + '" aria-label="Ampliar: ' + esc(item.alt) + '" data-reveal>' +
+          '<img src="' + esc(item.src) + '"' + srcset + ' alt="' + esc(item.alt) + '" ' +
+               'width="1000" height="1000" ' + (feature ? '' : 'loading="lazy" ') + 'decoding="async">' +
+          (item.title ? '<span class="gallery__cap">' + esc(item.title) + '</span>' : '') +
         '</button>';
     }).join('');
 
