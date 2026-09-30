@@ -56,6 +56,9 @@
   margin-bottom: var(--sp-5);
 }
 
+/* Salto de línea del H1 sin <br>: el texto queda con un solo espacio */
+.hero__title-line { display: block; }
+
 .hero__text {
   font-size: var(--fs-lg);
   color: var(--c-paper-85);
