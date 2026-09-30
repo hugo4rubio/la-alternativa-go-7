@@ -17,15 +17,6 @@ la-alternativa-go/
 ├── sitemap.xml                 ← mapa del sitio para Google
 ├── vercel.json                 ← redirecciones y caché de imágenes, CSS y JS
 │
-├── catering-bodas-talavera/    ← página de servicio: catering para bodas
-├── catering-empresas-toledo/   ← página de servicio: catering para empresas
-├── alquiler-food-truck/        ← página de servicio: alquiler de food truck
-│   (HTML estático: se editan a mano. Si añades otra, enlázala desde el pie
-│    de index.html y de las demás páginas, y añádela a sitemap.xml y vercel.json)
-│
-├── api/
-│   └── enviar.js               ← función de Vercel: manda el correo maquetado
-│
 ├── paginas/                    ← páginas legales
 │   ├── aviso-legal.html
 │   ├── politica-privacidad.html

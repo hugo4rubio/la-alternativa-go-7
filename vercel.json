@@ -1,9 +1,9 @@
 {
   "redirects": [
     { "source": "/index.html", "destination": "/", "permanent": true },
-    { "source": "/catering-bodas-talavera", "destination": "/catering-bodas-talavera/", "permanent": true },
-    { "source": "/catering-empresas-toledo", "destination": "/catering-empresas-toledo/", "permanent": true },
-    { "source": "/alquiler-food-truck", "destination": "/alquiler-food-truck/", "permanent": true }
+    { "source": "/catering-bodas-talavera/:path*", "destination": "/#eventos", "permanent": true },
+    { "source": "/catering-empresas-toledo/:path*", "destination": "/#eventos", "permanent": true },
+    { "source": "/alquiler-food-truck/:path*", "destination": "/#servicios", "permanent": true }
   ],
   "headers": [
     {
