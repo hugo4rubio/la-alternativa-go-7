@@ -174,7 +174,7 @@ cambiar el número basta con tocar esa línea.
 
 ---
 
-## Formulario → hugo4rubio@gmail.com
+## Formulario → gastrobar.laalternativa@gmail.com (CCO: hugo4rubio@gmail.com)
 
 El visitante rellena, pulsa «Solicitar presupuesto» y el mensaje sale solo. No se abre Gmail
 ni ningún programa de correo.
@@ -208,8 +208,10 @@ La clave se queda guardada en Vercel: nunca está en el código ni la ve el visi
 
 Cada envío manda **dos correos**:
 
-- **A ti**, con la solicitud completa. Sale desde `onboarding@resend.dev`, y el botón Responder
-  va directo al cliente.
+- **Al negocio** (`gastrobar.laalternativa@gmail.com`), con copia oculta a `hugo4rubio@gmail.com`
+  y la solicitud completa. Sale desde `hola@alternativago.com` y el botón Responder va directo al
+  cliente. **Necesita `alternativago.com` verificado en Resend** (Domains): mientras no lo esté,
+  Resend lo rechaza y la solicitud llega solo a `hugo4rubio@gmail.com` desde `onboarding@resend.dev`.
 - **Al cliente**, confirmando que la hemos recibido, con un resumen y los botones WhatsApp y
   Llamar. Sale desde `hola@alternativago.com`, y si contesta, te llega a ti. Para eso
   `alternativago.com` tiene que estar verificado en Resend (**Domains**). Si esta copia falla,

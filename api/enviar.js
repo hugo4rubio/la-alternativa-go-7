@@ -21,7 +21,11 @@
    La clave se queda en Vercel, nunca en el código ni a la vista del visitante.
 
    Se mandan DOS correos:
-     · A ti, con la solicitud completa (Responder va directo al cliente).
+     · Al negocio (DESTINO) con copia oculta a COPIA_OCULTA, con la solicitud
+       completa (Responder va directo al cliente). Sale desde el dominio
+       verificado; si Resend lo rechaza (dominio aún sin verificar), se
+       reenvía desde onboarding@resend.dev solo a COPIA_OCULTA, que es el
+       correo de la cuenta de Resend, para no perder la solicitud.
      · Al cliente, confirmándole que la hemos recibido, con un resumen de lo
        que pidió. Sale desde hola@alternativago.com y, si contesta, te llega
        a ti. Para eso el dominio alternativago.com tiene que estar verificado
@@ -31,7 +35,8 @@
    por ejemplo:  La Alternativa Go <reservas@alternativago.com>
    ========================================================================== */
 
-const DESTINO  = 'hugo4rubio@gmail.com';
+const DESTINO      = 'gastrobar.laalternativa@gmail.com';
+const COPIA_OCULTA = 'hugo4rubio@gmail.com';   // en CCO
 const MARCA    = 'La Alternativa Go';
 const AMARILLO = '#ffc300';
 
@@ -284,14 +289,29 @@ export default async function handler(req, res) {
   ].join('\n');
 
   try {
-    const aTi = await enviarCorreo(clave, {
-      from: process.env.REMITENTE || REMITENTE_POR_DEFECTO,
-      to: [DESTINO],
+    const solicitud = {
       subject: asunto,
       html,
       text: texto,
       reply_to: email,        // responder va directo al cliente
+    };
+
+    let aTi = await enviarCorreo(clave, {
+      ...solicitud,
+      from: process.env.REMITENTE || REMITENTE_CLIENTE,
+      to: [DESTINO],
+      bcc: [COPIA_OCULTA],
     });
+
+    /* Plan B: con el dominio sin verificar, Resend solo deja escribir al
+       correo de la cuenta desde onboarding@resend.dev */
+    if (!aTi) {
+      aTi = await enviarCorreo(clave, {
+        ...solicitud,
+        from: REMITENTE_POR_DEFECTO,
+        to: [COPIA_OCULTA],
+      });
+    }
 
     if (!aTi) {
       return res.status(502).json({ ok: false, error: 'El servicio de correo ha fallado' });

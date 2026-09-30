@@ -1,7 +1,7 @@
 /* ==========================================================================
    form.js — Validación y envío del formulario de presupuesto
    ---------------------------------------------------------------------------
-   DESTINO: hugo4rubio@gmail.com
+   DESTINO: gastrobar.laalternativa@gmail.com (con copia oculta a hugo4rubio@gmail.com)
 
    El visitante rellena, pulsa «Solicitar presupuesto» y el mensaje sale solo.
    No se abre Gmail ni ningún programa de correo.
@@ -39,7 +39,7 @@ window.LAG_Form = (function () {
        la URL de formsubmit.co            (correo genérico, sin configurar) */
     endpoint: '/api/enviar',
 
-    email: 'hugo4rubio@gmail.com',
+    email: 'gastrobar.laalternativa@gmail.com',
 
     /* Si el envío falla (sin conexión, servicio caído), se ofrece WhatsApp
        para no perder al cliente. */

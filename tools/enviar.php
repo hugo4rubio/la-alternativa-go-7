@@ -17,7 +17,8 @@
 
 declare(strict_types=1);
 
-const DESTINO = 'hugo4rubio@gmail.com';
+const DESTINO      = 'gastrobar.laalternativa@gmail.com';
+const COPIA_OCULTA = 'hugo4rubio@gmail.com';   // en CCO
 const MARCA   = 'La Alternativa Go';
 const AMARILLO = '#ffc300';
 
@@ -208,6 +209,7 @@ $dominio = $_SERVER['HTTP_HOST'] ?? 'localhost';
 $cabeceras = implode("\r\n", [
     'From: ' . MARCA . ' <no-reply@' . $dominio . '>',
     'Reply-To: ' . $nombre . ' <' . $email . '>',   // responder va al cliente
+    'Bcc: ' . COPIA_OCULTA,
     'MIME-Version: 1.0',
     'Content-Type: multipart/alternative; boundary="' . $limite . '"',
     'X-Mailer: PHP/' . phpversion(),
