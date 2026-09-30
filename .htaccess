@@ -1,0 +1,11 @@
+# .htaccess — Solo tiene efecto en un hosting Apache (por ejemplo, DonDominio).
+# Hoy la web está en Vercel, que ignora este archivo: allí las mismas
+# redirecciones las hace Vercel solo (http → https y sin www → www).
+# Se deja preparado por si algún día la web se sube a un hosting Apache.
+
+RewriteEngine On
+
+# Todo a https://www.alternativago.com en un solo salto
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^(.*)$ https://www.alternativago.com/$1 [L,R=301]
