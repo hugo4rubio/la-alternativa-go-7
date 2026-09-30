@@ -272,3 +272,4 @@
 .site-footer__bottom a { text-decoration: underline; }
 
 .site-footer__credit { margin-top: var(--sp-2); opacity: .75; }
+.section__seo a { color: inherit; font-weight: 600; text-decoration: underline; text-decoration-color: var(--c-yellow); text-underline-offset: 3px; }

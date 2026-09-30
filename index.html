@@ -12,7 +12,6 @@
        ======================================================= -->
   <title>Catering y Foodtruck en Talavera de la Reina | La Alternativa Go</title>
   <meta name="description" content="Catering y food truck en Talavera de la Reina para bodas, cumpleaños, empresas y festivales. Street food recién hecha en la provincia de Toledo.">
-  <meta name="keywords" content="catering Talavera de la Reina, catering en Talavera, foodtruck Talavera de la Reina, food truck Talavera de la Reina, alquiler foodtruck Talavera, foodtruck eventos Toledo, catering bodas Talavera, catering eventos empresa Toledo, food truck catering Talavera de la Reina">
   <link rel="canonical" href="https://www.alternativago.com/">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <meta name="author" content="La Alternativa Go">
@@ -51,10 +50,10 @@
        search.google.com/search-console (método "Etiqueta HTML") y descoméntala.
   <meta name="google-site-verification" content="PEGA-AQUI-TU-CODIGO">
   -->
-  <link rel="preload" as="image" href="assets/img/foodtruck.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/foodtruck.webp" imagesrcset="assets/img/foodtruck-640.webp 640w, assets/img/foodtruck.webp 1024w" imagesizes="100vw" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&display=swap" rel="stylesheet">
 
   <!-- Hojas de estilo (orden importante: base → layout → componentes → secciones) -->
   <link rel="stylesheet" href="assets/css/base.css">
@@ -66,6 +65,8 @@
   <!-- ==================== DATOS ESTRUCTURADOS GLOBALES ====================
        Ficha del negocio para Google. Rellena los campos marcados como
        PENDIENTE cuando tengas los datos definitivos.
+       Cuando tengas la ficha de Google Business Profile, añade su enlace
+       (https://maps.app.goo.gl/...) a "sameAs" y como "hasMap".
        ====================================================================== -->
   <script type="application/ld+json">
   {
@@ -80,6 +81,7 @@
         "slogan": "Tu evento. Nuestra foodtruck.",
         "url": "https://www.alternativago.com/",
         "telephone": "+34653794537",
+        "email": "gastrobar.laalternativa@gmail.com",
         "priceRange": "€€",
         "servesCuisine": ["Street food", "Española"],
         "image": [
@@ -92,6 +94,7 @@
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Talavera de la Reina",
+          "postalCode": "45600",
           "addressRegion": "Toledo",
           "addressCountry": "ES"
         },
@@ -189,7 +192,8 @@
          ============================================================ -->
     <section class="hero" id="inicio" aria-labelledby="titulo-inicio">
       <div class="hero__media">
-        <img src="assets/img/foodtruck.jpg"
+        <img src="assets/img/foodtruck.webp"
+             srcset="assets/img/foodtruck-640.webp 640w, assets/img/foodtruck.webp 1024w" sizes="100vw"
              alt="Food truck amarilla de La Alternativa Go preparada para un catering en Talavera de la Reina"
              fetchpriority="high" width="1024" height="768">
       </div>
@@ -245,7 +249,7 @@
         <!-- Foto de la foodtruck con su cartel -->
         <figure class="about__media">
           <div class="about__frame">
-            <img src="assets/img/foodtruck.jpg"
+            <img src="assets/img/foodtruck.webp"
                  alt="La foodtruck de La Alternativa Go montada en un evento en Talavera de la Reina"
                  loading="lazy" width="1024" height="768">
           </div>
@@ -307,6 +311,11 @@
           <a class="btn btn--primary" href="#contacto">Pedir presupuesto</a>
           <a class="btn btn--ghost" id="waServicios" href="https://wa.me/34653794537?text=Hola%2C%20quer%C3%ADa%20informaci%C3%B3n%20sobre%20el%20alquiler%20de%20la%20foodtruck%20con%20catering%20para%20un%20evento." target="_blank" rel="noopener noreferrer">Preguntar por WhatsApp</a>
         </div>
+        <p class="section__seo" data-reveal>
+          Más información: <a href="alquiler-food-truck/">alquiler de food truck en Talavera de la Reina</a>,
+          <a href="catering-bodas-talavera/">catering para bodas</a> y
+          <a href="catering-empresas-toledo/">catering para empresas en Talavera y Toledo</a>.
+        </p>
       </div>
 
       <script type="application/ld+json">
@@ -323,6 +332,7 @@
               "@type": "Service",
               "name": "Alquiler de foodtruck para eventos",
               "serviceType": "Alquiler de foodtruck",
+              "url": "https://www.alternativago.com/alquiler-food-truck/",
               "description": "Alquiler de foodtruck con cocina propia y personal de servicio para eventos en Talavera de la Reina y la provincia de Toledo.",
               "areaServed": { "@type": "AdministrativeArea", "name": "Provincia de Toledo" },
               "provider": { "@id": "https://www.alternativago.com/#negocio" }
@@ -373,7 +383,7 @@
         </header>
 
         <!-- Se genera desde assets/js/menu.js con los datos de data.js -->
-        <div class="grid grid--4 menu-grid" id="menuGrid"><!-- prerender --><article class="dish dish--featured" data-reveal><div class="dish__media"><span class="dish__flag">El más pedido</span><img src="assets/img/molletes.jpg" alt="Molletes recién tostados de la foodtruck" loading="lazy" width="900" height="600"></div><div class="dish__body"><div class="dish__head"><h3 class="dish__name">Molletes</h3><span class="dish__price">6 €</span></div><p class="dish__desc">Molletes tostados y rellenos, listos para comer con las manos.</p><ul class="dish__tags"><li>oreja</li><li>calamares</li><li>bacon</li><li>lomo</li><li>chorizo</li></ul></div></article><article class="dish" data-reveal><div class="dish__media"><img src="assets/img/raciones.jpg" alt="Ración de street food para compartir" loading="lazy" width="900" height="600"></div><div class="dish__body"><div class="dish__head"><h3 class="dish__name">Raciones</h3><span class="dish__price">10 €</span></div><p class="dish__desc">Raciones generosas para compartir en cualquier celebración.</p><ul class="dish__tags"><li>oreja</li><li>calamares</li><li>fingers</li></ul></div></article><article class="dish" data-reveal><div class="dish__media"><img src="assets/img/patatas.jpg" alt="Patatas fritas crujientes recién hechas" loading="lazy" width="900" height="600"></div><div class="dish__body"><div class="dish__head"><h3 class="dish__name">Patatas</h3><span class="dish__price">5 €</span></div><p class="dish__desc">Crujientes y recién hechas.</p></div></article><article class="dish" data-reveal><div class="dish__media"><img src="assets/img/pincho.jpg" alt="Pincho moruno especiado a la plancha" loading="lazy" width="900" height="600"></div><div class="dish__body"><div class="dish__head"><h3 class="dish__name">Pincho Moruno</h3><span class="dish__price">3,50 €</span></div><p class="dish__desc">Especiado y a la plancha.</p></div></article><!-- /prerender --></div>
+        <div class="grid grid--4 menu-grid" id="menuGrid"><!-- prerender --><article class="dish dish--featured" data-reveal><div class="dish__media"><span class="dish__flag">El más pedido</span><img src="assets/img/molletes.webp" alt="Molletes recién tostados de la foodtruck" loading="lazy" width="900" height="600"></div><div class="dish__body"><div class="dish__head"><h3 class="dish__name">Molletes</h3><span class="dish__price">6 €</span></div><p class="dish__desc">Molletes tostados y rellenos, listos para comer con las manos.</p><ul class="dish__tags"><li>oreja</li><li>calamares</li><li>bacon</li><li>lomo</li><li>chorizo</li></ul></div></article><article class="dish" data-reveal><div class="dish__media"><img src="assets/img/raciones.webp" alt="Ración de street food para compartir" loading="lazy" width="900" height="600"></div><div class="dish__body"><div class="dish__head"><h3 class="dish__name">Raciones</h3><span class="dish__price">10 €</span></div><p class="dish__desc">Raciones generosas para compartir en cualquier celebración.</p><ul class="dish__tags"><li>oreja</li><li>calamares</li><li>fingers</li></ul></div></article><article class="dish" data-reveal><div class="dish__media"><img src="assets/img/patatas.webp" alt="Patatas fritas crujientes recién hechas" loading="lazy" width="900" height="600"></div><div class="dish__body"><div class="dish__head"><h3 class="dish__name">Patatas</h3><span class="dish__price">5 €</span></div><p class="dish__desc">Crujientes y recién hechas.</p></div></article><article class="dish" data-reveal><div class="dish__media"><img src="assets/img/pincho.webp" alt="Pincho moruno especiado a la plancha" loading="lazy" width="900" height="600"></div><div class="dish__body"><div class="dish__head"><h3 class="dish__name">Pincho Moruno</h3><span class="dish__price">3,50 €</span></div><p class="dish__desc">Especiado y a la plancha.</p></div></article><!-- /prerender --></div>
 
         <p class="menu-note" data-reveal>
           Precios de barra por unidad. Para eventos preparamos un
@@ -457,7 +467,7 @@
         </header>
 
         <!-- Se genera desde assets/js/gallery.js -->
-        <div class="gallery" id="gallery"><!-- prerender --><button class="gallery__item gallery__item--feature" type="button" data-index="0" aria-label="Ampliar: Equipo de camareros de La Alternativa Go junto a la foodtruck en un evento en Talavera de la Reina" data-reveal><img src="assets/img/galeria/16-equipo-foodtruck-evento-sm.webp" srcset="assets/img/galeria/16-equipo-foodtruck-evento-sm.webp 1000w, assets/img/galeria/16-equipo-foodtruck-evento.webp 2048w" sizes="(max-width: 640px) 92vw, 780px" alt="Equipo de camareros de La Alternativa Go junto a la foodtruck en un evento en Talavera de la Reina" width="1000" height="1000" decoding="async"><span class="gallery__cap">Nuestro equipo, listo para servir</span></button><button class="gallery__item" type="button" data-index="1" aria-label="Ampliar: Ensaladas con langostinos emplatadas para un catering de celebración" data-reveal><img src="assets/img/galeria/04-ensaladas-langostinos-sm.webp" srcset="assets/img/galeria/04-ensaladas-langostinos-sm.webp 1000w, assets/img/galeria/04-ensaladas-langostinos.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Ensaladas con langostinos emplatadas para un catering de celebración" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">Ensaladas de langostinos</span></button><button class="gallery__item" type="button" data-index="2" aria-label="Ampliar: Cortador de jamón a cuchillo en un catering al aire libre en Toledo" data-reveal><img src="assets/img/galeria/13-cortador-jamon-sm.webp" srcset="assets/img/galeria/13-cortador-jamon-sm.webp 1000w, assets/img/galeria/13-cortador-jamon.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Cortador de jamón a cuchillo en un catering al aire libre en Toledo" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">Cortador de jamón a cuchillo</span></button><button class="gallery__item" type="button" data-index="3" aria-label="Ampliar: Foodtruck amarilla de La Alternativa Go montada para un evento en la provincia de Toledo" data-reveal><img src="assets/img/galeria/03-foodtruck-roll-up-sm.webp" srcset="assets/img/galeria/03-foodtruck-roll-up-sm.webp 1000w, assets/img/galeria/03-foodtruck-roll-up.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Foodtruck amarilla de La Alternativa Go montada para un evento en la provincia de Toledo" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">La foodtruck en un evento</span></button><button class="gallery__item" type="button" data-index="4" aria-label="Ampliar: Canapés variados de salmón, paté y membrillo para catering de eventos" data-reveal><img src="assets/img/galeria/07-canapes-variados-sm.webp" srcset="assets/img/galeria/07-canapes-variados-sm.webp 1000w, assets/img/galeria/07-canapes-variados.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Canapés variados de salmón, paté y membrillo para catering de eventos" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">Canapés variados</span></button><button class="gallery__item" type="button" data-index="5" aria-label="Ampliar: Tablas de queso curado y jamón para un cóctel de empresa" data-reveal><img src="assets/img/galeria/15-tablas-queso-jamon-sm.webp" srcset="assets/img/galeria/15-tablas-queso-jamon-sm.webp 1000w, assets/img/galeria/15-tablas-queso-jamon.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Tablas de queso curado y jamón para un cóctel de empresa" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">Tablas de queso y jamón</span></button><button class="gallery__item" type="button" data-index="6" aria-label="Ampliar: Desayuno de catering con croissants de jamón y queso y bollería variada" data-reveal><img src="assets/img/galeria/11-desayuno-bolleria-sm.webp" srcset="assets/img/galeria/11-desayuno-bolleria-sm.webp 1000w, assets/img/galeria/11-desayuno-bolleria.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Desayuno de catering con croissants de jamón y queso y bollería variada" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">Desayunos de empresa</span></button><button class="gallery__item" type="button" data-index="7" aria-label="Ampliar: Vino tinto D.O. Bierzo servido en mesa alta durante un evento al aire libre" data-reveal><img src="assets/img/galeria/06-vino-men-de-mencia-sm.webp" srcset="assets/img/galeria/06-vino-men-de-mencia-sm.webp 1000w, assets/img/galeria/06-vino-men-de-mencia.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Vino tinto D.O. Bierzo servido en mesa alta durante un evento al aire libre" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">Vino D.O. Bierzo</span></button><button class="gallery__item" type="button" data-index="8" aria-label="Ampliar: Estación de café, zumos y bollería para un desayuno de empresa" data-reveal><img src="assets/img/galeria/12-cafe-y-zumos-sm.webp" srcset="assets/img/galeria/12-cafe-y-zumos-sm.webp 1000w, assets/img/galeria/12-cafe-y-zumos.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Estación de café, zumos y bollería para un desayuno de empresa" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">Estación de café y zumos</span></button><!-- /prerender --></div>
+        <div class="gallery" id="gallery"><!-- prerender --><button class="gallery__item gallery__item--feature" type="button" data-index="0" aria-label="Ampliar: Equipo de camareros de La Alternativa Go junto a la foodtruck en un evento en Talavera de la Reina" data-reveal><img src="assets/img/galeria/16-equipo-foodtruck-evento-sm.webp" srcset="assets/img/galeria/16-equipo-foodtruck-evento-xs.webp 600w, assets/img/galeria/16-equipo-foodtruck-evento-sm.webp 1000w, assets/img/galeria/16-equipo-foodtruck-evento.webp 2048w" sizes="(max-width: 640px) 92vw, 780px" alt="Equipo de camareros de La Alternativa Go junto a la foodtruck en un evento en Talavera de la Reina" width="1000" height="1000" decoding="async"><span class="gallery__cap">Nuestro equipo, listo para servir</span></button><button class="gallery__item" type="button" data-index="1" aria-label="Ampliar: Ensaladas con langostinos emplatadas para un catering de celebración" data-reveal><img src="assets/img/galeria/04-ensaladas-langostinos-xs.webp" srcset="assets/img/galeria/04-ensaladas-langostinos-xs.webp 600w, assets/img/galeria/04-ensaladas-langostinos-sm.webp 1000w, assets/img/galeria/04-ensaladas-langostinos.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Ensaladas con langostinos emplatadas para un catering de celebración" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">Ensaladas de langostinos</span></button><button class="gallery__item" type="button" data-index="2" aria-label="Ampliar: Cortador de jamón a cuchillo en un catering al aire libre en Toledo" data-reveal><img src="assets/img/galeria/13-cortador-jamon-xs.webp" srcset="assets/img/galeria/13-cortador-jamon-xs.webp 600w, assets/img/galeria/13-cortador-jamon-sm.webp 1000w, assets/img/galeria/13-cortador-jamon.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Cortador de jamón a cuchillo en un catering al aire libre en Toledo" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">Cortador de jamón a cuchillo</span></button><button class="gallery__item" type="button" data-index="3" aria-label="Ampliar: Foodtruck amarilla de La Alternativa Go montada para un evento en la provincia de Toledo" data-reveal><img src="assets/img/galeria/03-foodtruck-roll-up-xs.webp" srcset="assets/img/galeria/03-foodtruck-roll-up-xs.webp 600w, assets/img/galeria/03-foodtruck-roll-up-sm.webp 1000w, assets/img/galeria/03-foodtruck-roll-up.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Foodtruck amarilla de La Alternativa Go montada para un evento en la provincia de Toledo" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">La foodtruck en un evento</span></button><button class="gallery__item" type="button" data-index="4" aria-label="Ampliar: Canapés variados de salmón, paté y membrillo para catering de eventos" data-reveal><img src="assets/img/galeria/07-canapes-variados-xs.webp" srcset="assets/img/galeria/07-canapes-variados-xs.webp 600w, assets/img/galeria/07-canapes-variados-sm.webp 1000w, assets/img/galeria/07-canapes-variados.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Canapés variados de salmón, paté y membrillo para catering de eventos" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">Canapés variados</span></button><button class="gallery__item" type="button" data-index="5" aria-label="Ampliar: Tablas de queso curado y jamón para un cóctel de empresa" data-reveal><img src="assets/img/galeria/15-tablas-queso-jamon-xs.webp" srcset="assets/img/galeria/15-tablas-queso-jamon-xs.webp 600w, assets/img/galeria/15-tablas-queso-jamon-sm.webp 1000w, assets/img/galeria/15-tablas-queso-jamon.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Tablas de queso curado y jamón para un cóctel de empresa" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">Tablas de queso y jamón</span></button><button class="gallery__item" type="button" data-index="6" aria-label="Ampliar: Desayuno de catering con croissants de jamón y queso y bollería variada" data-reveal><img src="assets/img/galeria/11-desayuno-bolleria-xs.webp" srcset="assets/img/galeria/11-desayuno-bolleria-xs.webp 600w, assets/img/galeria/11-desayuno-bolleria-sm.webp 1000w, assets/img/galeria/11-desayuno-bolleria.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Desayuno de catering con croissants de jamón y queso y bollería variada" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">Desayunos de empresa</span></button><button class="gallery__item" type="button" data-index="7" aria-label="Ampliar: Vino tinto D.O. Bierzo servido en mesa alta durante un evento al aire libre" data-reveal><img src="assets/img/galeria/06-vino-men-de-mencia-xs.webp" srcset="assets/img/galeria/06-vino-men-de-mencia-xs.webp 600w, assets/img/galeria/06-vino-men-de-mencia-sm.webp 1000w, assets/img/galeria/06-vino-men-de-mencia.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Vino tinto D.O. Bierzo servido en mesa alta durante un evento al aire libre" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">Vino D.O. Bierzo</span></button><button class="gallery__item" type="button" data-index="8" aria-label="Ampliar: Estación de café, zumos y bollería para un desayuno de empresa" data-reveal><img src="assets/img/galeria/12-cafe-y-zumos-xs.webp" srcset="assets/img/galeria/12-cafe-y-zumos-xs.webp 600w, assets/img/galeria/12-cafe-y-zumos-sm.webp 1000w, assets/img/galeria/12-cafe-y-zumos.webp 2048w" sizes="(max-width: 640px) 46vw, 380px" alt="Estación de café, zumos y bollería para un desayuno de empresa" width="1000" height="1000" loading="lazy" decoding="async"><span class="gallery__cap">Estación de café y zumos</span></button><!-- /prerender --></div>
       </div>
 
       <script type="application/ld+json">
@@ -489,7 +499,7 @@
         <p class="eyebrow">La Alternativa</p>
         <h2 class="section__title" id="titulo-la-alternativa">¿Conoces La Alternativa?</h2>
         <p class="section__lead">
-          Además de nuestra foodtruck, puedes descubrir La Alternativa, tu negocio local de confianza.
+          Además de nuestra foodtruck, puedes descubrir La Alternativa, nuestro gastro-bar en Talavera de la Reina.
         </p>
 
         <a class="btn" href="https://laalternativa.es" target="_blank" rel="noopener noreferrer">
@@ -831,6 +841,9 @@
           <li><a href="#inicio">Inicio</a></li>
           <li><a href="#quienes-somos">Quiénes somos</a></li>
           <li><a href="#servicios">Servicios</a></li>
+          <li><a href="catering-bodas-talavera/">Catering para bodas</a></li>
+          <li><a href="catering-empresas-toledo/">Catering para empresas</a></li>
+          <li><a href="alquiler-food-truck/">Alquiler de food truck</a></li>
           <li><a href="#carta">Carta</a></li>
           <li><a href="#eventos">Eventos</a></li>
           <li><a href="#galeria">Galería</a></li>

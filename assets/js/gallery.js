@@ -90,13 +90,14 @@ window.LAG_Gallery = (function () {
     host.innerHTML = data.gallery.map(function (item, i) {
       var feature = i === 0;
       var srcset = item.full
-        ? ' srcset="' + esc(item.src) + ' 1000w, ' + esc(item.full) + ' 2048w"' +
+        ? ' srcset="' + (item.thumb ? esc(item.thumb) + ' 600w, ' : '') +
+          esc(item.src) + ' 1000w, ' + esc(item.full) + ' 2048w"' +
           ' sizes="' + (feature ? '(max-width: 640px) 92vw, 780px' : '(max-width: 640px) 46vw, 380px') + '"'
         : '';
       return '' +
         '<button class="gallery__item' + (feature ? ' gallery__item--feature' : '') + '" type="button" ' +
                 'data-index="' + i + '" aria-label="Ampliar: ' + esc(item.alt) + '" data-reveal>' +
-          '<img src="' + esc(item.src) + '"' + srcset + ' alt="' + esc(item.alt) + '" ' +
+          '<img src="' + esc(feature ? item.src : (item.thumb || item.src)) + '"' + srcset + ' alt="' + esc(item.alt) + '" ' +
                'width="1000" height="1000" ' + (feature ? '' : 'loading="lazy" ') + 'decoding="async">' +
           (item.title ? '<span class="gallery__cap">' + esc(item.title) + '</span>' : '') +
         '</button>';

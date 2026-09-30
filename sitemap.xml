@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Solo la página principal: las páginas legales llevan noindex
-     y están bloqueadas en robots.txt, así que no se listan aquí. -->
+<!-- Página principal y páginas de servicio. Las páginas legales llevan
+     noindex, así que no se listan aquí. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
   <url>
     <loc>https://www.alternativago.com/</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-09-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -57,6 +57,47 @@
       <image:loc>https://www.alternativago.com/assets/img/galeria/12-cafe-y-zumos.webp</image:loc>
       <image:title>Estación de café y zumos</image:title>
       <image:caption>Estación de café, zumos y bollería para un desayuno de empresa</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.alternativago.com/catering-bodas-talavera/</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.alternativago.com/assets/img/galeria/13-cortador-jamon.webp</image:loc>
+      <image:title>Cortador de jamón para bodas</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.alternativago.com/assets/img/galeria/04-ensaladas-langostinos.webp</image:loc>
+      <image:title>Ensaladas de langostinos para bodas</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.alternativago.com/catering-empresas-toledo/</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.alternativago.com/assets/img/galeria/11-desayuno-bolleria.webp</image:loc>
+      <image:title>Desayunos de empresa</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.alternativago.com/assets/img/galeria/12-cafe-y-zumos.webp</image:loc>
+      <image:title>Estación de café y zumos</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.alternativago.com/alquiler-food-truck/</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.alternativago.com/assets/img/galeria/03-foodtruck-roll-up.webp</image:loc>
+      <image:title>Alquiler de food truck en Talavera de la Reina</image:title>
     </image:image>
   </url>
 

@@ -865,3 +865,35 @@
 @media (prefers-reduced-motion: reduce) {
   .faq__q::after { transition: none; }
 }
+
+/* ==========================================================================
+   PÁGINAS DE SERVICIO (catering-bodas-talavera, catering-empresas-toledo,
+   alquiler-food-truck): cabecera más baja, migas, fotos y texto largo
+   ========================================================================== */
+.hero--page { min-height: 72svh; }
+.hero--page .hero__title { font-size: var(--fs-3xl); }
+
+.crumbs { margin-bottom: var(--sp-5); font-size: var(--fs-xs); color: var(--c-paper-70); }
+.crumbs ol { display: flex; flex-wrap: wrap; gap: .4rem; }
+.crumbs li + li::before { content: "›"; margin-right: .4rem; }
+.crumbs a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.crumbs a:hover { color: var(--c-yellow); }
+
+.prose { max-width: 780px; margin-inline: auto; }
+.prose p { color: var(--c-text-soft); font-size: var(--fs-lg); line-height: 1.7; margin-bottom: var(--sp-4); }
+.prose a { color: var(--c-black); font-weight: 600; text-decoration: underline; text-decoration-color: var(--c-yellow); text-underline-offset: 3px; }
+
+.photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
+.photo-grid figure { margin: 0; border-radius: var(--radius-lg); overflow: hidden; background: var(--c-black); }
+.photo-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+.photo-grid figcaption { padding: var(--sp-3) var(--sp-4); color: var(--c-paper-70); font-size: var(--fs-sm); }
+
+.related { display: flex; flex-wrap: wrap; gap: var(--sp-3); justify-content: center; }
+
+@media (max-width: 880px) {
+  .photo-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .hero--page { min-height: auto; }
+  .photo-grid { grid-template-columns: 1fr; }
+}

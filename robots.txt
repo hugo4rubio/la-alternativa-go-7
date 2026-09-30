@@ -1,8 +1,10 @@
 # robots.txt — La Alternativa Go
 # Foodtruck y catering en Talavera de la Reina (Toledo)
+# Las páginas legales no se bloquean aquí: llevan <meta name="robots" content="noindex">
+# y Google necesita poder leerlas para ver esa etiqueta.
 
 User-agent: *
 Allow: /
-Disallow: /paginas/
+Disallow: /api/
 
 Sitemap: https://www.alternativago.com/sitemap.xml

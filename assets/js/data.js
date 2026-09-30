@@ -29,11 +29,11 @@ window.LAG_DATA = (function () {
      Si descargas las fotos a assets/img (ver tools/descargar-imagenes.sh),
      el script cambia estas rutas automáticamente. */
   var IMG = {
-    molletes:  'assets/img/molletes.jpg',
-    raciones:  'assets/img/raciones.jpg',
-    patatas:   'assets/img/patatas.jpg',
-    pincho:    'assets/img/pincho.jpg',
-    foodtruck: 'assets/img/foodtruck.jpg'
+    molletes:  'assets/img/molletes.webp',
+    raciones:  'assets/img/raciones.webp',
+    patatas:   'assets/img/patatas.webp',
+    pincho:    'assets/img/pincho.webp',
+    foodtruck: 'assets/img/foodtruck.webp'
   };
 
 
@@ -135,12 +135,13 @@ window.LAG_DATA = (function () {
   ];
 
   /* ---------- BLOQUE 6 · Galería ---------- */
-  /* Fotos locales optimizadas (WebP): "-sm" (1000px) para la cuadrícula y la
-     versión grande (2048px) para pantallas retina y el visor a pantalla completa.
+  /* Fotos locales optimizadas (WebP): "-xs" (600px) para las miniaturas, "-sm"
+     (1000px) para la foto destacada y pantallas retina, y la versión grande
+     (2048px) para el visor a pantalla completa.
      La primera foto se muestra destacada, en grande. */
   var GAL = 'assets/img/galeria/';
   function gal(file, title, alt) {
-    return { src: GAL + file + '-sm.webp', full: GAL + file + '.webp', title: title, alt: alt };
+    return { thumb: GAL + file + '-xs.webp', src: GAL + file + '-sm.webp', full: GAL + file + '.webp', title: title, alt: alt };
   }
   var gallery = [
     gal('16-equipo-foodtruck-evento', 'Nuestro equipo, listo para servir',

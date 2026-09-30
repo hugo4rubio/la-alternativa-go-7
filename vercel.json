@@ -1,0 +1,18 @@
+{
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/catering-bodas-talavera", "destination": "/catering-bodas-talavera/", "permanent": true },
+    { "source": "/catering-empresas-toledo", "destination": "/catering-empresas-toledo/", "permanent": true },
+    { "source": "/alquiler-food-truck", "destination": "/alquiler-food-truck/", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/assets/img/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=86400" }]
+    },
+    {
+      "source": "/assets/(css|js)/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }]
+    }
+  ]
+}
